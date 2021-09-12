@@ -1,4 +1,4 @@
-package com.nemesisprotocol.cryptocraze.ui.theme
+package com.nemesisprotocol.cryptocraze.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

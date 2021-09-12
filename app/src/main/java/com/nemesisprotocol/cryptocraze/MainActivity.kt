@@ -8,7 +8,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.nemesisprotocol.cryptocraze.ui.theme.CryptoCrazeTheme
+import com.nemesisprotocol.cryptocraze.presentation.Navigation
+import com.nemesisprotocol.cryptocraze.presentation.ui.theme.CryptoCrazeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
             CryptoCrazeTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    Navigation()
                 }
             }
         }
