@@ -1,6 +1,8 @@
 package com.nemesisprotocol.cryptocraze
 
 sealed class Screen(val route: String) {
-    object SplashScreen : Screen("splash_screen")
-    object LoginScreen : Screen("login_screen")
+    object Splash: Screen("splash_screen")
+    object Login : Screen("login_screen")
+    object SignUp : Screen("sign_up_screen")
+    object Home : Screen("home_screen")
 }

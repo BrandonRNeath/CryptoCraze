@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">CryptoCraze</string>
+    <string name="app_name_title">Crypto Craze</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="confirm_password">Show Password</string>
+    <string name="show_password">Show Password</string>
+    <string name="hide_password">Hide Password</string>
+    <string name="have_account_already_sign_in_instead">Have Account already? Login instead.</string>
+    <string name="do_not_have_account_sign_up_instead">Don\'t have Account? Sign up instead :)</string>
 </resources>
