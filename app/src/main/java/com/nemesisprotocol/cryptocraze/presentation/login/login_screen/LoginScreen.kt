@@ -8,10 +8,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -35,10 +32,14 @@ import kotlinx.coroutines.*
 
 @ExperimentalComposeUiApi
 @Composable
-fun LoginScreen(navController: NavHostController, model: LoginViewModel = hiltViewModel()) {
+fun LoginScreen(
+    userLoggedIn: MutableState<Boolean>,
+    navController: NavHostController,
+    model: LoginViewModel = hiltViewModel()
+) {
 
     val coroutineScope = rememberCoroutineScope()
-    SignIn(navController) { email: String, password: String ->
+    SignIn(userLoggedIn, navController) { email: String, password: String ->
         coroutineScope.async {
             model.login(email, password)
         }
@@ -48,6 +49,7 @@ fun LoginScreen(navController: NavHostController, model: LoginViewModel = hiltVi
 @ExperimentalComposeUiApi
 @Composable
 private fun SignIn(
+    userLoggedIn: MutableState<Boolean>,
     navController: NavHostController,
     onDone: (String, String) -> Deferred<Boolean>
 ) {
@@ -92,7 +94,14 @@ private fun SignIn(
             validInputs = isValid
         ) {
             coroutineScope.launch {
-                if (onDone(username.value.trim(), password.value.trim()).await()) navController.navigate(Screen.Home.route)
+                if (onDone(
+                        username.value.trim(),
+                        password.value.trim()
+                    ).await()
+                ) {
+                    userLoggedIn.value = true
+                    navController.navigate(Screen.Home.route)
+                }
             }
             keyboardController?.hide()
         }

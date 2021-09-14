@@ -1,21 +1,24 @@
 package com.nemesisprotocol.cryptocraze.presentation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.nemesisprotocol.cryptocraze.Screen
 import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeScreen
+import com.nemesisprotocol.cryptocraze.presentation.info_screen.InfoScreen
 import com.nemesisprotocol.cryptocraze.presentation.login.login_screen.LoginScreen
 import com.nemesisprotocol.cryptocraze.presentation.login.signup_screen.SignUpScreen
+import com.nemesisprotocol.cryptocraze.presentation.messenger.MessengerScreen
 import com.nemesisprotocol.cryptocraze.presentation.splash_screen.SplashScreen
+import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletScreen
 
 
 @ExperimentalComposeUiApi
 @Composable
-fun Navigation() {
-    val navController = rememberNavController()
+fun Navigation(navController: NavHostController, userLoggedIn: MutableState<Boolean>) {
 
     NavHost(navController = navController, startDestination = Screen.Splash.route) {
 
@@ -23,7 +26,7 @@ fun Navigation() {
             SplashScreen(navController = navController)
         }
         composable(Screen.Login.route) {
-            LoginScreen(navController)
+            LoginScreen(userLoggedIn = userLoggedIn, navController = navController)
         }
 
         composable(Screen.SignUp.route) {
@@ -31,7 +34,19 @@ fun Navigation() {
         }
 
         composable(Screen.Home.route) {
-            HomeScreen(navController = navController)
+            HomeScreen()
+        }
+
+        composable(Screen.Wallet.route) {
+            WalletScreen()
+        }
+
+        composable(Screen.Messenger.route) {
+            MessengerScreen()
+        }
+
+        composable(Screen.Info.route) {
+            InfoScreen()
         }
 
     }
