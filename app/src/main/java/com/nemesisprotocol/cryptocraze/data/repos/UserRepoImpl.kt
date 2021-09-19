@@ -1,7 +1,8 @@
-package com.nemesisprotocol.cryptocraze.data.database
+package com.nemesisprotocol.cryptocraze.data.repos
 
-import com.nemesisprotocol.cryptocraze.domain.User
-import com.nemesisprotocol.cryptocraze.domain.UserRepo
+import com.nemesisprotocol.cryptocraze.data.database.user.UserDao
+import com.nemesisprotocol.cryptocraze.domain.user.User
+import com.nemesisprotocol.cryptocraze.domain.user.UserRepo
 import javax.inject.Inject
 
 class UserRepoImpl @Inject constructor(private val userDao: UserDao) : UserRepo {

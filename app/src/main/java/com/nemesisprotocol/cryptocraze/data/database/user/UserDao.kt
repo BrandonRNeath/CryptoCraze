@@ -1,10 +1,10 @@
-package com.nemesisprotocol.cryptocraze.data.database
+package com.nemesisprotocol.cryptocraze.data.database.user
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.nemesisprotocol.cryptocraze.domain.User
+import com.nemesisprotocol.cryptocraze.domain.user.User
 
 @Dao
 interface UserDao {

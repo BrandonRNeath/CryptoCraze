@@ -1,4 +1,4 @@
-package com.nemesisprotocol.cryptocraze.domain
+package com.nemesisprotocol.cryptocraze.domain.user
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -2,10 +2,14 @@ package com.nemesisprotocol.cryptocraze.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.nemesisprotocol.cryptocraze.data.database.UserDao
-import com.nemesisprotocol.cryptocraze.data.database.UserDatabase
-import com.nemesisprotocol.cryptocraze.data.database.UserRepoImpl
-import com.nemesisprotocol.cryptocraze.domain.UserRepo
+import com.nemesisprotocol.cryptocraze.data.database.crypto_fav_data.CryptoFavDataDao
+import com.nemesisprotocol.cryptocraze.data.database.crypto_fav_data.CryptoFavDataDatabase
+import com.nemesisprotocol.cryptocraze.data.database.user.UserDao
+import com.nemesisprotocol.cryptocraze.data.database.user.UserDatabase
+import com.nemesisprotocol.cryptocraze.data.repos.CryptoFavDataRepoImpl
+import com.nemesisprotocol.cryptocraze.data.repos.UserRepoImpl
+import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoFavDataRepo
+import com.nemesisprotocol.cryptocraze.domain.user.UserRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +20,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class DatabaseModule {
-
 
     @Provides
     @Singleton
@@ -31,5 +34,21 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun provideUserRepo(userRepoImpl: UserRepoImpl) : UserRepo = userRepoImpl
+
+
+    @Provides
+    @Singleton
+    fun provideCryptoDataDatabase(@ApplicationContext context: Context): CryptoFavDataDatabase {
+        return Room.databaseBuilder(context, CryptoFavDataDatabase::class.java, "crypto_fav_data_db").build()
+    }
+
+    @Provides
+    fun provideCryptoDataDao(cryptoFavDataDatabase: CryptoFavDataDatabase): CryptoFavDataDao = cryptoFavDataDatabase.cryptoFavDataDao()
+
+
+    @Provides
+    @Singleton
+    fun provideCryptoFavDataRepo(cryptoFavDataRepoImpl: CryptoFavDataRepoImpl) : CryptoFavDataRepo = cryptoFavDataRepoImpl
+
 
 }

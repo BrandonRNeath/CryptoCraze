@@ -6,6 +6,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import coil.annotation.ExperimentalCoilApi
 import com.nemesisprotocol.cryptocraze.Screen
 import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeScreen
 import com.nemesisprotocol.cryptocraze.presentation.info_screen.InfoScreen
@@ -16,6 +17,7 @@ import com.nemesisprotocol.cryptocraze.presentation.splash_screen.SplashScreen
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletScreen
 
 
+@ExperimentalCoilApi
 @ExperimentalComposeUiApi
 @Composable
 fun Navigation(navController: NavHostController, userLoggedIn: MutableState<Boolean>) {

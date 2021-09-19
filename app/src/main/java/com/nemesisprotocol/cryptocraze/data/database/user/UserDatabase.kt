@@ -1,8 +1,8 @@
-package com.nemesisprotocol.cryptocraze.data.database
+package com.nemesisprotocol.cryptocraze.data.database.user
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.nemesisprotocol.cryptocraze.domain.User
+import com.nemesisprotocol.cryptocraze.domain.user.User
 
 @Database(entities = [User::class], version = 1)
 abstract class UserDatabase : RoomDatabase() {
