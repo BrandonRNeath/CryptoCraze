@@ -16,7 +16,6 @@ import com.nemesisprotocol.cryptocraze.presentation.messenger.MessengerScreen
 import com.nemesisprotocol.cryptocraze.presentation.splash_screen.SplashScreen
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletScreen
 
-
 @ExperimentalCoilApi
 @ExperimentalComposeUiApi
 @Composable
@@ -50,7 +49,5 @@ fun Navigation(navController: NavHostController, userLoggedIn: MutableState<Bool
         composable(Screen.Info.route) {
             InfoScreen()
         }
-
     }
-
 }

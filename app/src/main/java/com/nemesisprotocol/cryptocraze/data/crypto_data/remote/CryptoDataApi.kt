@@ -12,5 +12,4 @@ interface CryptoDataApi {
         @Query("page") page: Int = 1,
         @Query("per_page") pageSize: Int = 20
     ): Response<List<CryptoDataApiResponse>>
-
 }

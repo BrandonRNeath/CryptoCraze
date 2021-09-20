@@ -28,7 +28,6 @@ import com.nemesisprotocol.cryptocraze.presentation.LineChart
 import com.nemesisprotocol.cryptocraze.presentation.ui.theme.gradientGreenColors
 import com.nemesisprotocol.cryptocraze.presentation.ui.theme.gradientRedColors
 
-
 @ExperimentalCoilApi
 @Composable
 fun CryptoDataListItem(
@@ -75,7 +74,7 @@ fun CryptoDataListItem(
             )
             Text(
                 text = cryptoData.dailyChange.roundToThreeDecimals() +
-                        " (${cryptoData.dailyChangePercentage.roundToTwoDecimals()}%)",
+                    " (${cryptoData.dailyChangePercentage.roundToTwoDecimals()}%)",
                 color = if (cryptoData.dailyChange > 0) Color.Green else Color.Red,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -86,7 +85,6 @@ fun CryptoDataListItem(
         IconToggleButton(
             checked = isFav,
             onCheckedChange = {
-
             }
         ) {
             Icon(

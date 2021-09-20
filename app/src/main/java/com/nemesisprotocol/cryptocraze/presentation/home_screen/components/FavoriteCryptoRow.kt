@@ -17,15 +17,16 @@ import kotlin.random.Random
 
 @Composable
 fun FavouriteCryptoRow(cryptoName: String) {
-    Card(modifier = Modifier
-        .height(64.dp)
-        .fillMaxWidth()
-        .padding(top = 16.dp, start = 8.dp, end = 8.dp),
+    Card(
+        modifier = Modifier
+            .height(64.dp)
+            .fillMaxWidth()
+            .padding(top = 16.dp, start = 8.dp, end = 8.dp),
         backgroundColor = if (isSystemInDarkTheme()) Color.White else Color.Black
     ) {
         Row {
             Text(
-                color =  if (isSystemInDarkTheme()) Color.Black else Color.White,
+                color = if (isSystemInDarkTheme()) Color.Black else Color.White,
                 text = cryptoName
             )
             LineChart(
@@ -33,7 +34,7 @@ fun FavouriteCryptoRow(cryptoName: String) {
                     .fillMaxWidth()
                     .height(100.dp),
                 yAxisValues = createRandomFloatList(),
-                lineColors =  gradientGreenColors
+                lineColors = gradientGreenColors
             )
         }
     }
@@ -46,4 +47,3 @@ fun createRandomFloatList(): List<Float> {
     }
     return list
 }
-

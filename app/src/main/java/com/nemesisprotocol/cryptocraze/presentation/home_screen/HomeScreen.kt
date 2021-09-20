@@ -24,7 +24,6 @@ import com.nemesisprotocol.cryptocraze.presentation.home_screen.components.Crypt
 
 data class Crypto(val cryptoName: String)
 
-
 @ExperimentalCoilApi
 @ExperimentalComposeUiApi
 @Composable

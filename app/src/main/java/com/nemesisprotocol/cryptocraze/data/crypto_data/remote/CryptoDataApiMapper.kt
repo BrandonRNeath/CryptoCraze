@@ -19,4 +19,3 @@ class CryptoDataApiMapper {
         chartData = cryptoApiResponse.sparkline_in_7d.price
     )
 }
-

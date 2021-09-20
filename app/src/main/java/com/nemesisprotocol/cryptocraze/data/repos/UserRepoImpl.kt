@@ -30,5 +30,4 @@ class UserRepoImpl @Inject constructor(private val userDao: UserDao) : UserRepo 
     override fun wipeUsers() {
         userDao.wipeUsers()
     }
-
 }

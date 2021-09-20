@@ -3,7 +3,11 @@ package com.nemesisprotocol.cryptocraze
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Composable
@@ -17,7 +21,6 @@ import com.nemesisprotocol.cryptocraze.presentation.BottomNavigationBar
 import com.nemesisprotocol.cryptocraze.presentation.Navigation
 import com.nemesisprotocol.cryptocraze.presentation.ui.theme.CryptoCrazeTheme
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

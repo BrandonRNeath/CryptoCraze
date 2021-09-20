@@ -24,5 +24,4 @@ class CryptoFavDataRepoImpl @Inject constructor(private val cryptoFavDataDao: Cr
     override suspend fun wipeFavorites() {
         cryptoFavDataDao.wipeFavorites()
     }
-
 }

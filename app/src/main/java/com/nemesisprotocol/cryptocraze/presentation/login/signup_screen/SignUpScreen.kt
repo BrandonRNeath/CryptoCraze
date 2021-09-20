@@ -34,7 +34,6 @@ import com.nemesisprotocol.cryptocraze.presentation.login.components.PasswordTex
 import com.nemesisprotocol.cryptocraze.presentation.login.components.SubmitButton
 import com.nemesisprotocol.cryptocraze.presentation.login.components.UsernameTextField
 
-
 @ExperimentalComposeUiApi
 @Composable
 fun SignUpScreen(navController: NavHostController, model: LoginViewModel = hiltViewModel()) {
@@ -42,7 +41,6 @@ fun SignUpScreen(navController: NavHostController, model: LoginViewModel = hiltV
         model.createUser(email, password, confirmedPassword)
     }
 }
-
 
 @ExperimentalComposeUiApi
 @Composable
@@ -68,7 +66,6 @@ fun SignUp(
         .background(MaterialTheme.colors.background)
         .verticalScroll(rememberScrollState())
 
-
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = stringResource(id = R.string.app_name_title),
@@ -77,9 +74,12 @@ fun SignUp(
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.onBackground
         )
-        UsernameTextField(valueState = username, onAction = KeyboardActions {
-            passwordFocusRequester.requestFocus()
-        })
+        UsernameTextField(
+            valueState = username,
+            onAction = KeyboardActions {
+                passwordFocusRequester.requestFocus()
+            }
+        )
         PasswordTextField(
             modifier = Modifier.focusRequester(passwordFocusRequester),
             passwordState = password,
@@ -111,7 +111,7 @@ fun SignUp(
             text = stringResource(id = R.string.have_account_already_sign_in_instead),
             modifier = Modifier
                 .clickable {
-                    navController.navigate(Screen.Login.route)//onPageChange(LoginViewModel.Page.SIGN_IN)
+                    navController.navigate(Screen.Login.route) // onPageChange(LoginViewModel.Page.SIGN_IN)
                 }
                 .padding(vertical = 20.dp, horizontal = 10.dp),
             color = MaterialTheme.colors.onBackground

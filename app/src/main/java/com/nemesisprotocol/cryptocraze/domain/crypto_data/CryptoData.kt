@@ -40,5 +40,4 @@ data class CryptoData(
         result = 31 * result + chartData.hashCode()
         return result
     }
-
 }

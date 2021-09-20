@@ -76,9 +76,12 @@ private fun SignIn(
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.onBackground
         )
-        UsernameTextField(valueState = username, onAction = KeyboardActions {
-            passwordFocusRequester.requestFocus()
-        })
+        UsernameTextField(
+            valueState = username,
+            onAction = KeyboardActions {
+                passwordFocusRequester.requestFocus()
+            }
+        )
         PasswordTextField(
             modifier = Modifier.focusRequester(passwordFocusRequester),
             passwordState = password,
@@ -108,12 +111,11 @@ private fun SignIn(
         Text(
             text = stringResource(id = R.string.do_not_have_account_sign_up_instead),
             modifier = Modifier
-                .clickable { //onPageChange(LoginViewModel.Page.SIGN_UP)
+                .clickable { // onPageChange(LoginViewModel.Page.SIGN_UP)
                     navController.navigate(Screen.SignUp.route)
                 }
                 .padding(10.dp),
             color = MaterialTheme.colors.onBackground
         )
     }
-
 }

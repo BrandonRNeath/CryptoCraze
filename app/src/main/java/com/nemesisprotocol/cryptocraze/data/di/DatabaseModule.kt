@@ -30,11 +30,9 @@ class DatabaseModule {
     @Provides
     fun provideUserDao(userDatabase: UserDatabase): UserDao = userDatabase.userDao()
 
-
     @Provides
     @Singleton
-    fun provideUserRepo(userRepoImpl: UserRepoImpl) : UserRepo = userRepoImpl
-
+    fun provideUserRepo(userRepoImpl: UserRepoImpl): UserRepo = userRepoImpl
 
     @Provides
     @Singleton
@@ -45,10 +43,7 @@ class DatabaseModule {
     @Provides
     fun provideCryptoDataDao(cryptoFavDataDatabase: CryptoFavDataDatabase): CryptoFavDataDao = cryptoFavDataDatabase.cryptoFavDataDao()
 
-
     @Provides
     @Singleton
-    fun provideCryptoFavDataRepo(cryptoFavDataRepoImpl: CryptoFavDataRepoImpl) : CryptoFavDataRepo = cryptoFavDataRepoImpl
-
-
+    fun provideCryptoFavDataRepo(cryptoFavDataRepoImpl: CryptoFavDataRepoImpl): CryptoFavDataRepo = cryptoFavDataRepoImpl
 }

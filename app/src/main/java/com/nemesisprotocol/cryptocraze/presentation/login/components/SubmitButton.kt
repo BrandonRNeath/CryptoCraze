@@ -22,8 +22,8 @@ fun SubmitButton(
         enabled = validInputs,
         onClick = onClick
     ) {
-        //if (loading) CircularProgressIndicator(modifier = Modifier.size(25.dp))
+        // if (loading) CircularProgressIndicator(modifier = Modifier.size(25.dp))
         // else
-            Text(text = stringResource(id = textId), modifier = Modifier.padding(5.dp))
+        Text(text = stringResource(id = textId), modifier = Modifier.padding(5.dp))
     }
 }

@@ -24,7 +24,7 @@ class HomeViewModel @Inject constructor(
     private val cryptoDataRepo: CryptoDataRepo,
 ) : ViewModel() {
 
-    val favCryptoLiveData = liveData (Dispatchers.IO) {
+    val favCryptoLiveData = liveData(Dispatchers.IO) {
         emitSource(getFavCryptoDataUseCase())
     }
 
@@ -98,5 +98,4 @@ class HomeViewModel @Inject constructor(
             )
         )
     }
-
 }

@@ -27,10 +27,9 @@ object AppModule {
     }
 
     @Provides
-    fun provideCryptoDataMapper() : CryptoDataApiMapper = CryptoDataApiMapper()
+    fun provideCryptoDataMapper(): CryptoDataApiMapper = CryptoDataApiMapper()
 
     @Provides
     @Singleton
-    fun provideCryptoDataRepo(cryptoDataRepoImpl: CryptoDataRepoImpl) : CryptoDataRepo = cryptoDataRepoImpl
-
+    fun provideCryptoDataRepo(cryptoDataRepoImpl: CryptoDataRepoImpl): CryptoDataRepo = cryptoDataRepoImpl
 }
