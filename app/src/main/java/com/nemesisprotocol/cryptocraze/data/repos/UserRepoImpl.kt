@@ -15,6 +15,10 @@ class UserRepoImpl @Inject constructor(private val userDao: UserDao) : UserRepo 
         return userDao.getUserByUsername(username)
     }
 
+    override fun checkUserExists(username: String): Boolean {
+        return userDao.checkUserExists(username)
+    }
+
     override fun isValidLoginCredentials(username: String, password: String): Boolean {
         return userDao.isValidLoginCredentials(username, password)
     }

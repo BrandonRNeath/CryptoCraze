@@ -2,10 +2,7 @@ package com.nemesisprotocol.cryptocraze.presentation.login
 
 import androidx.lifecycle.ViewModel
 import com.nemesisprotocol.cryptocraze.domain.user.User
-import com.nemesisprotocol.cryptocraze.domain.user.usecase.AddUserUseCase
-import com.nemesisprotocol.cryptocraze.domain.user.usecase.GetUserByUsernameUseCase
-import com.nemesisprotocol.cryptocraze.domain.user.usecase.GetUsersUseCase
-import com.nemesisprotocol.cryptocraze.domain.user.usecase.IsValidLoginCredentialsUseCase
+import com.nemesisprotocol.cryptocraze.domain.user.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -15,12 +12,18 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val getUserByUsernameUseCase: GetUserByUsernameUseCase,
     private val getUsersUseCase: GetUsersUseCase,
+    private val checkUserExistsUseCase: CheckUserExistsUseCase,
     private val addUserUseCase: AddUserUseCase,
     private val isValidLoginCredentialsUseCase: IsValidLoginCredentialsUseCase
 ) : ViewModel() {
 
     fun createUser(username: String, password: String, confirmPassword: String) {
-        addUserUseCase(User(username = username, password = password))
+        if (password == confirmPassword) addUserUseCase(
+            User(
+                username = username,
+                password = password
+            )
+        )
     }
 
     suspend fun login(username: String, password: String): Boolean {
@@ -29,4 +32,12 @@ class LoginViewModel @Inject constructor(
             isLoginValid
         }
     }
+
+    suspend fun checkUserExists(username: String): Boolean {
+        return withContext(Dispatchers.IO) {
+            val userExists = checkUserExistsUseCase(username)
+            userExists
+        }
+    }
+
 }

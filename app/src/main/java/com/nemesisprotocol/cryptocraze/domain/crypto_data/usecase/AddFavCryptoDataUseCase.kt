@@ -1,6 +1,5 @@
 package com.nemesisprotocol.cryptocraze.domain.crypto_data.usecase
 
-import android.util.Log
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoData
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoFavDataRepo
 import kotlinx.coroutines.CoroutineScope
@@ -12,7 +11,6 @@ class AddFavCryptoDataUseCase @Inject constructor(private val cryptoFavDataRepo:
     private val addFavCryptoDataCoroutineScope = CoroutineScope(Dispatchers.Default)
     operator fun invoke(cryptoData: CryptoData) =
         addFavCryptoDataCoroutineScope.launch {
-            Log.d("Testing", cryptoData.chartData.toString())
             cryptoFavDataRepo.addFav(cryptoData)
         }
 }
