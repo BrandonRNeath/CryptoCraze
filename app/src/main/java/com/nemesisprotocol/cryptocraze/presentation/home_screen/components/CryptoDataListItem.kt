@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,6 +26,7 @@ import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoData
 import com.nemesisprotocol.cryptocraze.extensions.roundToThreeDecimals
 import com.nemesisprotocol.cryptocraze.extensions.roundToTwoDecimals
 import com.nemesisprotocol.cryptocraze.presentation.LineChart
+import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeViewModel
 import com.nemesisprotocol.cryptocraze.presentation.ui.theme.gradientGreenColors
 import com.nemesisprotocol.cryptocraze.presentation.ui.theme.gradientRedColors
 
@@ -32,7 +34,8 @@ import com.nemesisprotocol.cryptocraze.presentation.ui.theme.gradientRedColors
 @Composable
 fun CryptoDataListItem(
     cryptoData: CryptoData,
-    isFav: Boolean = false,
+    isFav: MutableState<Boolean>,
+    viewModel: HomeViewModel
 ) {
     Row(
         modifier = Modifier
@@ -83,14 +86,21 @@ fun CryptoDataListItem(
             )
         }
         IconToggleButton(
-            checked = isFav,
+            checked = isFav.value,
             onCheckedChange = {
+                if (!isFav.value) {
+                    viewModel.addFavCrypto(cryptoData)
+                    isFav.value = !isFav.value
+                } else {
+                    viewModel.deleteFavCrypto(cryptoData)
+                    isFav.value = !isFav.value
+                }
             }
         ) {
             Icon(
-                imageVector = if (isFav) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                imageVector = if (isFav.value) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                 contentDescription = null,
-                tint = if (isFav) Color.Red else MaterialTheme.colors.onSurface
+                tint = if (isFav.value) Color.Red else MaterialTheme.colors.onSurface
             )
         }
     }

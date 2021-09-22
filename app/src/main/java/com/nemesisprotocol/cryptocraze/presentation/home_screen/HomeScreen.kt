@@ -6,6 +6,9 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -21,6 +24,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import coil.annotation.ExperimentalCoilApi
 import com.nemesisprotocol.cryptocraze.presentation.home_screen.components.CryptoDataListItem
+import kotlinx.coroutines.launch
 
 data class Crypto(val cryptoName: String)
 
@@ -32,6 +36,7 @@ fun HomeScreen() {
     val homeViewModel: HomeViewModel = hiltViewModel()
     val listScrollState = rememberLazyListState()
     val pagingCryptoDataItems = homeViewModel.getAllCryptos().collectAsLazyPagingItems()
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -71,7 +76,13 @@ fun HomeScreen() {
         LazyColumn(state = listScrollState) {
             itemsIndexed(pagingCryptoDataItems) { _, crypto ->
                 crypto?.let {
-                    CryptoDataListItem(crypto)
+                    val isFav =
+                        remember { mutableStateOf(false) }
+                    coroutineScope.launch {
+                        isFav.value = homeViewModel.checkFavExists(crypto.name)
+                    }
+
+                    CryptoDataListItem(crypto, isFav, viewModel = homeViewModel)
                 }
             }
             pagingCryptoDataItems.apply {

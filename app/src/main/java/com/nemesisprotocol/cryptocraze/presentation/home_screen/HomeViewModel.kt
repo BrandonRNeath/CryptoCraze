@@ -10,10 +10,12 @@ import com.nemesisprotocol.cryptocraze.data.paging.PageNumberSource
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoData
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoDataRepo
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.usecase.AddFavCryptoDataUseCase
+import com.nemesisprotocol.cryptocraze.domain.crypto_data.usecase.CheckFavCryptoExistsUseCase
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.usecase.GetFavCryptosDataUseCase
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.usecase.RemoveFavCryptoDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,11 +23,19 @@ class HomeViewModel @Inject constructor(
     private val getFavCryptoDataUseCase: GetFavCryptosDataUseCase,
     private val addFavCryptoDataUseCase: AddFavCryptoDataUseCase,
     private val removeFavCryptoDataUseCase: RemoveFavCryptoDataUseCase,
+    private val checkFavCryptoExistsUseCase: CheckFavCryptoExistsUseCase,
     private val cryptoDataRepo: CryptoDataRepo,
 ) : ViewModel() {
 
     val favCryptoLiveData = liveData(Dispatchers.IO) {
         emitSource(getFavCryptoDataUseCase())
+    }
+
+    suspend fun checkFavExists(cryptoName: String): Boolean {
+        return withContext(Dispatchers.IO) {
+            val favExists = checkFavCryptoExistsUseCase(cryptoName)
+            favExists
+        }
     }
 
     fun getAllCryptos(pageSize: Int = 20) =
@@ -35,67 +45,13 @@ class HomeViewModel @Inject constructor(
             }
         }.flow.cachedIn(viewModelScope)
 
-    fun addFavCrypto(
-        symbol: String,
-        price: Double,
-        name: String,
-        image: String,
-        dailyChange: Double,
-        dailyChangePercentage: Double,
-        high: Double,
-        low: Double,
-        marketCap: Long,
-        volume: Double,
-        supply: Double?,
-        chartData: List<Float>
-    ) {
-        addFavCryptoDataUseCase(
-            CryptoData(
-                symbol,
-                price,
-                name,
-                image,
-                dailyChange,
-                dailyChangePercentage,
-                high,
-                low,
-                marketCap,
-                volume,
-                supply,
-                chartData
-            )
-        )
+    fun addFavCrypto(cryptoData: CryptoData) {
+        addFavCryptoDataUseCase(cryptoData)
     }
 
     fun deleteFavCrypto(
-        symbol: String,
-        price: Double,
-        name: String,
-        image: String,
-        dailyChange: Double,
-        dailyChangePercentage: Double,
-        high: Double,
-        low: Double,
-        marketCap: Long,
-        volume: Double,
-        supply: Double?,
-        chartData: List<Float>
+        cryptoData: CryptoData
     ) {
-        removeFavCryptoDataUseCase(
-            CryptoData(
-                symbol,
-                price,
-                name,
-                image,
-                dailyChange,
-                dailyChangePercentage,
-                high,
-                low,
-                marketCap,
-                volume,
-                supply,
-                chartData
-            )
-        )
+        removeFavCryptoDataUseCase(cryptoData)
     }
 }

@@ -6,13 +6,13 @@ class ListTypeConverter {
     companion object {
         @TypeConverter
         @JvmStatic
-        fun gettingFloatListFromString(floatList: String?): List<Float>? {
+        fun gettingFloatListFromString(floatList: String?): List<Float> {
             val list = arrayListOf<Float>()
 
             val array =
                 floatList?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
             if (array.isNullOrEmpty()) {
-                return null
+                return emptyList()
             }
             for (s in array) {
                 if (s.isNotEmpty()) {
@@ -24,16 +24,15 @@ class ListTypeConverter {
 
         @TypeConverter
         @JvmStatic
-        fun writingStringFromFloatList(list: List<Float>?): String? {
+        fun writingStringFromFloatList(list: List<Float>): String {
             var genreIds = ""
             if (genreIds.isEmpty()) {
-                return null
+                return genreIds
             } else {
-                for (i in list!!) {
+                for (i in list) {
                     genreIds += ",$i"
                 }
             }
-
             return genreIds
         }
     }

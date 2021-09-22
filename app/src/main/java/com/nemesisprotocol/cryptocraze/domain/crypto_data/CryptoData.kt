@@ -1,24 +1,23 @@
 package com.nemesisprotocol.cryptocraze.domain.crypto_data
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import java.io.Serializable
 
 @Entity(tableName = "crypto_favorites")
 data class CryptoData(
     @PrimaryKey
     val symbol: String,
-    val price: Double,
-    val name: String,
-    val image: String,
-    val dailyChange: Double,
-    val dailyChangePercentage: Double,
-    val high: Double,
-    val low: Double,
-    val marketCap: Long,
-    val volume: Double,
-    val supply: Double?,
-    val chartData: List<Float>
+    @ColumnInfo val price: Double,
+    @ColumnInfo val name: String,
+    @ColumnInfo val image: String,
+    @ColumnInfo val dailyChange: Double,
+    @ColumnInfo val dailyChangePercentage: Double,
+    @ColumnInfo val high: Double,
+    @ColumnInfo val low: Double,
+    @ColumnInfo val marketCap: Long,
+    @ColumnInfo val volume: Double,
+    @ColumnInfo val supply: Double?,
+    @ColumnInfo val chartData: List<Float>
 ) : Serializable {
 
     override fun equals(other: Any?): Boolean {
