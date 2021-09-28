@@ -10,6 +10,7 @@ import coil.annotation.ExperimentalCoilApi
 import com.nemesisprotocol.cryptocraze.Screen
 import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeScreen
 import com.nemesisprotocol.cryptocraze.presentation.info_screen.InfoScreen
+import com.nemesisprotocol.cryptocraze.presentation.info_screen.coin_info.CoinInfoScreen
 import com.nemesisprotocol.cryptocraze.presentation.login.login_screen.LoginScreen
 import com.nemesisprotocol.cryptocraze.presentation.login.signup_screen.SignUpScreen
 import com.nemesisprotocol.cryptocraze.presentation.messenger.MessengerScreen
@@ -47,7 +48,12 @@ fun Navigation(navController: NavHostController, userLoggedIn: MutableState<Bool
         }
 
         composable(Screen.Info.route) {
-            InfoScreen()
+            InfoScreen(navController = navController)
         }
+
+        composable(Screen.CoinDetailScreen.route + "/{coinId}") {
+            CoinInfoScreen()
+        }
+
     }
 }

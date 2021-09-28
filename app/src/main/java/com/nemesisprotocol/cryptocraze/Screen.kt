@@ -8,5 +8,6 @@ sealed class Screen(val route: String, val icon: Int?, val title: String) {
     object Settings : Screen("settings_screen", null, "Settings")
     object Wallet : Screen("wallet_screen", R.drawable.ic_wallet_24, "Wallet")
     object Info : Screen("info_screen", R.drawable.ic_info_24, "Info")
+    object CoinDetailScreen: Screen("coin_info_screen", null, "CoinInfo")
     object Messenger : Screen("message_screen", R.drawable.ic_messenger_24, "Messenger")
 }
