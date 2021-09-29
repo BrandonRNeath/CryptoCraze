@@ -3,21 +3,18 @@ package com.nemesisprotocol.cryptocraze
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import com.nemesisprotocol.cryptocraze.presentation.BottomNavigationBar
@@ -27,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @ExperimentalMaterialApi
     @ExperimentalCoilApi
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,28 +35,63 @@ class MainActivity : ComponentActivity() {
 
                 val userLoggedIn = remember { mutableStateOf(false) }
 
-                Scaffold(
-                    topBar = {
-                        if (userLoggedIn.value) {
-                            TopAppBar(
-                                title = {
-                                },
-                                navigationIcon = {
-                                    IconButton(onClick = { }) {
-                                        Icon(Icons.Rounded.Settings, "")
+                val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+                    bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
+                )
+                BottomSheetScaffold(
+                    scaffoldState = bottomSheetScaffoldState,
+                    sheetContent = {
+                        Box(
+                            Modifier
+                                .fillMaxWidth()
+                                .height(200.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .fillMaxHeight(),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Row() {
+                                    Button(
+                                        modifier = Modifier.padding(16.dp),
+                                        onClick = {  }) {
+                                        Text("Buy")
                                     }
-                                },
-                            )
+                                    Button(
+                                        modifier = Modifier.padding(16.dp),
+                                        onClick = {  }) {
+                                        Text("Sell")
+                                    }
+                                }
+                            }
                         }
-                    },
-                    bottomBar = {
-                        if (userLoggedIn.value) {
-                            BottomNavigationBar(navController)
-                        }
-                    }
+                    }, sheetPeekHeight = 0.dp
                 ) {
-                    Box(modifier = Modifier.padding(it)) {
-                        Navigation(navController, userLoggedIn)
+                    Scaffold(
+                        topBar = {
+                            if (userLoggedIn.value) {
+                                TopAppBar(
+                                    title = {
+                                    },
+                                    navigationIcon = {
+                                        IconButton(onClick = { }) {
+                                            Icon(Icons.Rounded.Settings, "")
+                                        }
+                                    },
+                                )
+                            }
+                        },
+                        bottomBar = {
+                            if (userLoggedIn.value) {
+                                BottomNavigationBar(navController, bottomSheetScaffoldState)
+                            }
+                        }
+                    ) {
+                        Box(modifier = Modifier.padding(it)) {
+                            Navigation(navController, userLoggedIn)
+                        }
                     }
                 }
             }
