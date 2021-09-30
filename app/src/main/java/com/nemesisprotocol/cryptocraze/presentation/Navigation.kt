@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import coil.annotation.ExperimentalCoilApi
 import com.nemesisprotocol.cryptocraze.Screen
 import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeScreen
+import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeViewModel
 import com.nemesisprotocol.cryptocraze.presentation.info_screen.InfoScreen
 import com.nemesisprotocol.cryptocraze.presentation.info_screen.coin_info.CoinInfoScreen
 import com.nemesisprotocol.cryptocraze.presentation.login.login_screen.LoginScreen
@@ -20,7 +21,11 @@ import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletScreen
 @ExperimentalCoilApi
 @ExperimentalComposeUiApi
 @Composable
-fun Navigation(navController: NavHostController, userLoggedIn: MutableState<Boolean>) {
+fun Navigation(
+    navController: NavHostController,
+    userLoggedIn: MutableState<Boolean>,
+    homeViewModel: HomeViewModel
+) {
 
     NavHost(navController = navController, startDestination = Screen.Splash.route) {
 
@@ -36,7 +41,7 @@ fun Navigation(navController: NavHostController, userLoggedIn: MutableState<Bool
         }
 
         composable(Screen.Home.route) {
-            HomeScreen()
+            HomeScreen(homeViewModel)
         }
 
         composable(Screen.Wallet.route) {

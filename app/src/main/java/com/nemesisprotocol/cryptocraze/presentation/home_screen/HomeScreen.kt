@@ -31,9 +31,8 @@ data class Crypto(val cryptoName: String)
 @ExperimentalCoilApi
 @ExperimentalComposeUiApi
 @Composable
-fun HomeScreen() {
+fun HomeScreen(homeViewModel: HomeViewModel) {
 
-    val homeViewModel: HomeViewModel = hiltViewModel()
     val listScrollState = rememberLazyListState()
     val pagingCryptoDataItems = homeViewModel.getAllCryptos().collectAsLazyPagingItems()
     val coroutineScope = rememberCoroutineScope()
