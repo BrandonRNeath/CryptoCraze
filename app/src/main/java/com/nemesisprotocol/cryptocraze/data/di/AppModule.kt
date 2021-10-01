@@ -49,5 +49,4 @@ object AppModule {
     @Provides
     @Singleton
     fun provideCoinRepo(coinRepositoryImpl: CoinRepositoryImpl): CoinRepo = coinRepositoryImpl
-
 }

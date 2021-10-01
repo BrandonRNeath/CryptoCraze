@@ -16,9 +16,9 @@ class GetCoinsUseCase @Inject constructor(private val coinRepo: CoinRepo) {
             emit(Resource.Loading<List<Coin>>())
             val coins = coinRepo.getCoins().map { it.toCoin() }
             emit(Resource.Success<List<Coin>>(coins))
-        } catch(e: HttpException) {
+        } catch (e: HttpException) {
             emit(Resource.Error<List<Coin>>(e.localizedMessage ?: "An error has occurred"))
-        } catch(e: IOException) {
+        } catch (e: IOException) {
             emit(Resource.Error<List<Coin>>("Error occurred check your internet connection."))
         }
     }

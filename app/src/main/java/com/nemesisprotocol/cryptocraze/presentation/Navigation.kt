@@ -1,5 +1,6 @@
 package com.nemesisprotocol.cryptocraze.presentation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -17,7 +18,10 @@ import com.nemesisprotocol.cryptocraze.presentation.login.signup_screen.SignUpSc
 import com.nemesisprotocol.cryptocraze.presentation.messenger.MessengerScreen
 import com.nemesisprotocol.cryptocraze.presentation.splash_screen.SplashScreen
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletScreen
+import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.add_wallet.AddCryptoCrazeVisaCardScreen
+import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.add_wallet.AddPaymentScreen
 
+@ExperimentalAnimationApi
 @ExperimentalCoilApi
 @ExperimentalComposeUiApi
 @Composable
@@ -45,7 +49,7 @@ fun Navigation(
         }
 
         composable(Screen.Wallet.route) {
-            WalletScreen()
+            WalletScreen(navController)
         }
 
         composable(Screen.Messenger.route) {
@@ -60,5 +64,12 @@ fun Navigation(
             CoinInfoScreen()
         }
 
+        composable(Screen.AddPaymentCard.route) {
+            AddPaymentScreen()
+        }
+
+        composable(Screen.AddCryptoCrazeVisaCard.route) {
+            AddCryptoCrazeVisaCardScreen()
+        }
     }
 }

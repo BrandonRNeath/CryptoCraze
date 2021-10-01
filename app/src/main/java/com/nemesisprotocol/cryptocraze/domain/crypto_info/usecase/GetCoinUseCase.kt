@@ -11,16 +11,16 @@ import java.io.IOException
 import javax.inject.Inject
 
 class GetCoinUseCase @Inject constructor(
-private val repository: CoinRepo
+    private val repository: CoinRepo
 ) {
     operator fun invoke(coinId: String): Flow<Resource<CoinDetail>> = flow {
         try {
             emit(Resource.Loading<CoinDetail>())
             val coin = repository.getCoinById(coinId).toCoinDetail()
             emit(Resource.Success<CoinDetail>(coin))
-        } catch(e: HttpException) {
+        } catch (e: HttpException) {
             emit(Resource.Error<CoinDetail>(e.localizedMessage ?: "An error has occurred"))
-        } catch(e: IOException) {
+        } catch (e: IOException) {
             emit(Resource.Error<CoinDetail>("Error has occurred check your internet connection."))
         }
     }

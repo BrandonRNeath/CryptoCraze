@@ -6,7 +6,7 @@ interface UserRepo {
 
     fun getUserByUsername(username: String): User
 
-    fun checkUserExists(username: String) : Boolean
+    fun checkUserExists(username: String): Boolean
 
     fun isValidLoginCredentials(username: String, password: String): Boolean
 
