@@ -1,6 +1,7 @@
 package com.nemesisprotocol.cryptocraze.data.di
 
 import com.nemesisprotocol.cryptocraze.common.Constants
+import com.nemesisprotocol.cryptocraze.common.DispatcherProvider
 import com.nemesisprotocol.cryptocraze.data.crypto_data.remote.CryptoDataApi
 import com.nemesisprotocol.cryptocraze.data.crypto_data.remote.CryptoDataApiMapper
 import com.nemesisprotocol.cryptocraze.data.crypto_info.remote.CoinPaprikaApi
@@ -14,6 +15,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -57,5 +60,18 @@ object AppModule {
     @Singleton
     fun providePaymentInfoRepo(paymentInfoRepoImpl: PaymentInfoRepoImpl): PaymentInfoRepo =
         paymentInfoRepoImpl
+
+    @Singleton
+    @Provides
+    fun provideDispatchers(): DispatcherProvider = object : DispatcherProvider {
+        override val main: CoroutineDispatcher
+            get() = Dispatchers.Main
+        override val io: CoroutineDispatcher
+            get() = Dispatchers.IO
+        override val default: CoroutineDispatcher
+            get() = Dispatchers.Default
+        override val unconfined: CoroutineDispatcher
+            get() = Dispatchers.Unconfined
+    }
 
 }
