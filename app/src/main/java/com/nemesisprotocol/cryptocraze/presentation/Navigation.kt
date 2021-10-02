@@ -17,6 +17,8 @@ import com.nemesisprotocol.cryptocraze.presentation.login.login_screen.LoginScre
 import com.nemesisprotocol.cryptocraze.presentation.login.signup_screen.SignUpScreen
 import com.nemesisprotocol.cryptocraze.presentation.messenger.MessengerScreen
 import com.nemesisprotocol.cryptocraze.presentation.splash_screen.SplashScreen
+import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.CryptoCrazeVisaCardAddedScreen
+import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.PaymentCardAddedScreen
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletScreen
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.add_wallet.AddCryptoCrazeVisaCardScreen
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.add_wallet.AddPaymentScreen
@@ -65,11 +67,20 @@ fun Navigation(
         }
 
         composable(Screen.AddPaymentCard.route) {
-            AddPaymentScreen()
+            AddPaymentScreen(navController)
         }
 
         composable(Screen.AddCryptoCrazeVisaCard.route) {
-            AddCryptoCrazeVisaCardScreen()
+            AddCryptoCrazeVisaCardScreen(navController)
         }
+
+        composable(Screen.CryptoCrazeVisaCardAdded.route) {
+            CryptoCrazeVisaCardAddedScreen(navController)
+        }
+
+        composable(Screen.PaymentCardAdded.route) {
+            PaymentCardAddedScreen(navController)
+        }
+
     }
 }

@@ -4,6 +4,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -11,13 +13,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.nemesisprotocol.cryptocraze.R
+import com.nemesisprotocol.cryptocraze.Screen
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.CryptoCrazeVisaColour
+import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletViewModel
+import com.nemesisprotocol.cryptocraze.domain.payment_info.CryptoCrazeVisaCard
 
 @ExperimentalAnimationApi
 @Composable
-fun AddCryptoCrazeVisaCardScreen() {
-
+fun AddCryptoCrazeVisaCardScreen(navController: NavHostController) {
+    val walletViewModel: WalletViewModel = hiltViewModel()
     val cardColour = remember { mutableStateOf(CryptoCrazeVisaColour.BLACK) }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -72,6 +79,16 @@ fun AddCryptoCrazeVisaCardScreen() {
                         .size(64.dp)
                         .clickable { cardColour.value = CryptoCrazeVisaColour.SILVER },
                 )
+            }
+            Button(
+                modifier = Modifier.padding(top = 24.dp),
+                onClick = {
+                    walletViewModel.addCryptoCrazeVisaCard(
+                        CryptoCrazeVisaCard(cryptoCrazeVisaColour = cardColour.value)
+                    )
+                    navController.navigate(Screen.CryptoCrazeVisaCardAdded.route)
+                }) {
+                Text("Create Visa Card")
             }
         }
     }

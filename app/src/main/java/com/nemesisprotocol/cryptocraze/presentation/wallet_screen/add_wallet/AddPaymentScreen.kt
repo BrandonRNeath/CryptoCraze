@@ -15,11 +15,17 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.nemesisprotocol.cryptocraze.R
+import com.nemesisprotocol.cryptocraze.Screen
+import com.nemesisprotocol.cryptocraze.domain.payment_info.FiatWalletCard
+import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletViewModel
 
 @ExperimentalAnimationApi
 @Composable
-fun AddPaymentScreen() {
+fun AddPaymentScreen(navController: NavHostController) {
+    val walletViewModel: WalletViewModel = hiltViewModel()
     var cardNameText by remember { mutableStateOf(TextFieldValue()) }
     var cardNumber by remember { mutableStateOf(TextFieldValue()) }
     var expiryNumber by remember { mutableStateOf(TextFieldValue()) }
@@ -107,7 +113,19 @@ fun AddPaymentScreen() {
 
                 item {
                     Button(
-                        onClick = { },
+                        onClick = {
+                            walletViewModel.addFiatWallet(
+                                FiatWalletCard(
+                                    cardNumber.text.toLong(),
+                                    cardNameText.text,
+                                    expiryNumber.text.toInt(),
+                                    cvvNumber.text.toInt()
+                                )
+                            )
+                            navController.navigate(
+                                Screen.PaymentCardAdded.route
+                            )
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 8.dp)

@@ -17,7 +17,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.nemesisprotocol.cryptocraze.R
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.add_wallet.AddCryptoCrazeVisaCardDialog
@@ -25,7 +24,6 @@ import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.add_wallet.Add
 
 @Composable
 fun WalletScreen(navController: NavHostController) {
-    val walletViewModel: WalletViewModel = hiltViewModel()
     val addPaymentCardDialog = remember { mutableStateOf(false) }
     val addCryptoCrazeVisaCardDialog = remember { mutableStateOf(false) }
     AddPaymentCardDialog(addPaymentCardDialog, navController)
