@@ -7,7 +7,8 @@ import com.nemesisprotocol.cryptocraze.domain.payment_info.CryptoCrazeVisaCard
 import com.nemesisprotocol.cryptocraze.domain.payment_info.FiatWalletCard
 import com.nemesisprotocol.cryptocraze.domain.payment_info.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -25,21 +26,22 @@ class WalletViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
-    suspend fun getCryptoCrazeVisaCards(): List<CryptoCrazeVisaCard> {
-        return withContext(Dispatchers.IO) {
-            getCryptoCrazeVisaCardsUseCase()
+    private val _paymentCards = MutableStateFlow<List<FiatWalletCard>>(emptyList())
+    val paymentCards: StateFlow<List<FiatWalletCard>> = _paymentCards
+
+    private val _cryptoCrazeVisaCards = MutableStateFlow<List<CryptoCrazeVisaCard>>(emptyList())
+    val cryptoCrazeVisaCards: StateFlow<List<CryptoCrazeVisaCard>> = _cryptoCrazeVisaCards
+
+    init {
+        viewModelScope.launch(dispatcherProvider.io) {
+            _paymentCards.value = getFiatWalletsUseCase()
+            _cryptoCrazeVisaCards.value = getCryptoCrazeVisaCardsUseCase()
         }
     }
 
     suspend fun getCryptoCrazeVisaCardById(cardId: Int): CryptoCrazeVisaCard {
         return withContext(dispatcherProvider.io) {
             getCryptoCrazeVisaCardByIdUseCase(cardId)
-        }
-    }
-
-    suspend fun getFiatWallets(): List<FiatWalletCard> {
-        return withContext(dispatcherProvider.io) {
-            getFiatWalletsUseCase()
         }
     }
 
