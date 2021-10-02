@@ -33,7 +33,7 @@ fun PaymentCard(
     nameText: TextFieldValue,
     cardNumber: TextFieldValue,
     expiryNumber: TextFieldValue,
-    cvcNumber: TextFieldValue
+    cvvNumber: TextFieldValue
 ) {
     var backVisible by remember { mutableStateOf(false) }
     var visaType by remember { mutableStateOf(CardType.None) }
@@ -41,11 +41,11 @@ fun PaymentCard(
     val initial = remember { "*****************" }
         .replaceRange(0..length, cardNumber.text.take(16))
 
-    if (cvcNumber.text.length == 1 && !backVisible) {
+    if (cvvNumber.text.length == 1 && !backVisible) {
         backVisible = true
-    } else if (cvcNumber.text.length == 2) {
+    } else if (cvvNumber.text.length == 2) {
         backVisible = true
-    } else if (cvcNumber.text.length == 3) {
+    } else if (cvvNumber.text.length == 3) {
         backVisible = false
     }
 
@@ -225,7 +225,7 @@ fun PaymentCard(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = cvcNumber.text,
+                    text = cvvNumber.text,
                     style = MaterialTheme.typography.body1,
                     color = Color.White,
                     modifier = Modifier

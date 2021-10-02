@@ -6,8 +6,10 @@ import com.nemesisprotocol.cryptocraze.data.crypto_data.remote.CryptoDataApiMapp
 import com.nemesisprotocol.cryptocraze.data.crypto_info.remote.CoinPaprikaApi
 import com.nemesisprotocol.cryptocraze.data.repos.CoinRepositoryImpl
 import com.nemesisprotocol.cryptocraze.data.repos.CryptoDataRepoImpl
+import com.nemesisprotocol.cryptocraze.data.repos.PaymentInfoRepoImpl
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoDataRepo
 import com.nemesisprotocol.cryptocraze.domain.crypto_info.CoinRepo
+import com.nemesisprotocol.cryptocraze.domain.payment_info.PaymentInfoRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,7 +36,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCryptoDataRepo(cryptoDataRepoImpl: CryptoDataRepoImpl): CryptoDataRepo = cryptoDataRepoImpl
+    fun provideCryptoDataRepo(cryptoDataRepoImpl: CryptoDataRepoImpl): CryptoDataRepo =
+        cryptoDataRepoImpl
 
     @Provides
     @Singleton
@@ -49,4 +52,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideCoinRepo(coinRepositoryImpl: CoinRepositoryImpl): CoinRepo = coinRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun providePaymentInfoRepo(paymentInfoRepoImpl: PaymentInfoRepoImpl): PaymentInfoRepo =
+        paymentInfoRepoImpl
+
 }

@@ -23,7 +23,7 @@ fun AddPaymentScreen() {
     var cardNameText by remember { mutableStateOf(TextFieldValue()) }
     var cardNumber by remember { mutableStateOf(TextFieldValue()) }
     var expiryNumber by remember { mutableStateOf(TextFieldValue()) }
-    var cvcNumber by remember { mutableStateOf(TextFieldValue()) }
+    var cvvNumber by remember { mutableStateOf(TextFieldValue()) }
     Scaffold {
         Column(modifier = Modifier.fillMaxSize()) {
             Column(
@@ -46,7 +46,7 @@ fun AddPaymentScreen() {
                 cardNameText,
                 cardNumber,
                 expiryNumber,
-                cvcNumber
+                cvvNumber
             )
             LazyColumn(
                 modifier = Modifier
@@ -94,10 +94,10 @@ fun AddPaymentScreen() {
                                 .padding(end = 8.dp)
                         )
                         InputItem(
-                            textFieldValue = cvcNumber,
-                            label = stringResource(id = R.string.cvc),
+                            textFieldValue = cvvNumber,
+                            label = stringResource(id = R.string.cvv),
                             keyboardType = KeyboardType.Number,
-                            onTextChanged = { if (it.text.length <= 3) cvcNumber = it },
+                            onTextChanged = { if (it.text.length <= 3) cvvNumber = it },
                             modifier = Modifier
                                 .weight(1f)
                                 .padding(start = 8.dp)

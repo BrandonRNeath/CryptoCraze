@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.nemesisprotocol.cryptocraze.data.database.crypto_fav_data.CryptoFavDataDao
 import com.nemesisprotocol.cryptocraze.data.database.crypto_fav_data.CryptoFavDataDatabase
+import com.nemesisprotocol.cryptocraze.data.database.payment_info.PaymentInfoDao
+import com.nemesisprotocol.cryptocraze.data.database.payment_info.PaymentInfoDatabase
 import com.nemesisprotocol.cryptocraze.data.database.user.UserDao
 import com.nemesisprotocol.cryptocraze.data.database.user.UserDatabase
 import com.nemesisprotocol.cryptocraze.data.repos.CryptoFavDataRepoImpl
@@ -46,4 +48,14 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun provideCryptoFavDataRepo(cryptoFavDataRepoImpl: CryptoFavDataRepoImpl): CryptoFavDataRepo = cryptoFavDataRepoImpl
+
+    @Provides
+    @Singleton
+    fun providePaymentInfoDatabase(@ApplicationContext context: Context) : PaymentInfoDatabase {
+        return Room.databaseBuilder(context, PaymentInfoDatabase::class.java, "payment_info_db").build()
+    }
+
+    @Provides
+    fun providePaymentInfoDao(paymentInfoDatabase: PaymentInfoDatabase) : PaymentInfoDao = paymentInfoDatabase.paymentInfoDao()
+
 }
