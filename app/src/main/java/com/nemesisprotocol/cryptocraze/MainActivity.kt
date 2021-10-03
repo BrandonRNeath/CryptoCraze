@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -28,12 +29,14 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import coil.annotation.ExperimentalCoilApi
+import com.google.gson.Gson
 import com.nemesisprotocol.cryptocraze.presentation.BottomNavigationBar
 import com.nemesisprotocol.cryptocraze.presentation.BottomSheetContent
 import com.nemesisprotocol.cryptocraze.presentation.Navigation
 import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeViewModel
 import com.nemesisprotocol.cryptocraze.presentation.ui.theme.CryptoCrazeTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -58,6 +61,8 @@ class MainActivity : ComponentActivity() {
                 )
                 val bottomSheetContent = remember { mutableStateOf(BottomSheetContent.BUY_SELL) }
                 val listScrollState = rememberLazyListState()
+
+                val coroutineScope = rememberCoroutineScope()
 
                 BottomSheetScaffold(
                     scaffoldState = bottomSheetScaffoldState,
@@ -145,6 +150,18 @@ class MainActivity : ComponentActivity() {
                                                             end = 8.dp,
                                                             top = 16.dp
                                                         )
+                                                        .clickable {
+                                                            coroutineScope.launch {
+                                                                bottomSheetScaffoldState.bottomSheetState.collapse()
+                                                                navController.navigate(
+                                                                    Screen.BuyCrypto.route + "/${
+                                                                    Gson().toJson(
+                                                                        it.mapPriceInfo()
+                                                                    )
+                                                                    }"
+                                                                )
+                                                            }
+                                                        }
                                                 ) {
                                                     Column(
                                                         modifier = Modifier.fillMaxSize(),
@@ -240,6 +257,18 @@ class MainActivity : ComponentActivity() {
                                                             end = 8.dp,
                                                             top = 16.dp
                                                         )
+                                                        .clickable {
+                                                            coroutineScope.launch {
+                                                                bottomSheetScaffoldState.bottomSheetState.collapse()
+                                                                navController.navigate(
+                                                                    Screen.SellCrypto.route + "/${
+                                                                    Gson().toJson(
+                                                                        it.mapPriceInfo()
+                                                                    )
+                                                                    }"
+                                                                )
+                                                            }
+                                                        }
                                                 ) {
                                                     Column(
                                                         modifier = Modifier.fillMaxSize(),

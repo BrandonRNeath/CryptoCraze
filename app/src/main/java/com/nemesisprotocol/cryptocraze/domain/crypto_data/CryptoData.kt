@@ -20,6 +20,10 @@ data class CryptoData(
     @ColumnInfo val chartData: List<Float>
 ) : Serializable {
 
+    fun mapPriceInfo(): CryptoDataPriceInfo {
+        return CryptoDataPriceInfo(symbol, price, name)
+    }
+
     override fun equals(other: Any?): Boolean {
         return (other as CryptoData).symbol == symbol
     }
