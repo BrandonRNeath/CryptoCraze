@@ -24,12 +24,37 @@ import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletViewMode
 
 @ExperimentalAnimationApi
 @Composable
-fun AddPaymentScreen(navController: NavHostController) {
+fun AddPaymentScreen(navController: NavHostController, fiatWalletCard: FiatWalletCard?) {
+    val existingFiatWalletCard = fiatWalletCard != null
     val walletViewModel: WalletViewModel = hiltViewModel()
-    var cardNameText by remember { mutableStateOf(TextFieldValue()) }
-    var cardNumber by remember { mutableStateOf(TextFieldValue()) }
-    var expiryNumber by remember { mutableStateOf(TextFieldValue()) }
-    var cvvNumber by remember { mutableStateOf(TextFieldValue()) }
+    var cardNameText by remember {
+        mutableStateOf(
+            if (existingFiatWalletCard) TextFieldValue(
+                fiatWalletCard!!.cardName
+            ) else TextFieldValue()
+        )
+    }
+    var cardNumber by remember {
+        mutableStateOf(
+            if (existingFiatWalletCard) TextFieldValue(
+                fiatWalletCard?.cardNumber.toString()
+            ) else TextFieldValue()
+        )
+    }
+    var expiryNumber by remember {
+        mutableStateOf(
+            if (existingFiatWalletCard) TextFieldValue(
+                fiatWalletCard?.expiryNumber.toString()
+            ) else TextFieldValue()
+        )
+    }
+    var cvvNumber by remember {
+        mutableStateOf(
+            if (existingFiatWalletCard) TextFieldValue(
+                fiatWalletCard?.cvvNumber.toString()
+            ) else TextFieldValue()
+        )
+    }
     Scaffold {
         Column(modifier = Modifier.fillMaxSize()) {
             Column(
@@ -114,7 +139,7 @@ fun AddPaymentScreen(navController: NavHostController) {
                 item {
                     Button(
                         onClick = {
-                            walletViewModel.addFiatWallet(
+                                walletViewModel.addFiatWallet(
                                 FiatWalletCard(
                                     cardNumber.text.toLong(),
                                     cardNameText.text,
@@ -122,9 +147,7 @@ fun AddPaymentScreen(navController: NavHostController) {
                                     cvvNumber.text.toInt()
                                 )
                             )
-                            navController.navigate(
-                                Screen.PaymentCardAdded.route
-                            )
+                            navController.navigate(Screen.PaymentCardAdded.route)
                         },
                         modifier = Modifier
                             .fillMaxWidth()

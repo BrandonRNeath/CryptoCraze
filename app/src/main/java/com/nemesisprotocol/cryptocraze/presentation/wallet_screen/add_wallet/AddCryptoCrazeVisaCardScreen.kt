@@ -23,9 +23,18 @@ import com.nemesisprotocol.cryptocraze.domain.payment_info.CryptoCrazeVisaCard
 
 @ExperimentalAnimationApi
 @Composable
-fun AddCryptoCrazeVisaCardScreen(navController: NavHostController) {
+fun AddCryptoCrazeVisaCardScreen(
+    navController: NavHostController,
+    cryptoCrazeVisaCard: CryptoCrazeVisaCard?
+) {
     val walletViewModel: WalletViewModel = hiltViewModel()
-    val cardColour = remember { mutableStateOf(CryptoCrazeVisaColour.BLACK) }
+    val cardColour =
+        remember {
+            mutableStateOf(
+                cryptoCrazeVisaCard?.cryptoCrazeVisaColour
+                    ?: CryptoCrazeVisaColour.BLACK
+            )
+        }
 
     Column(modifier = Modifier.fillMaxSize()) {
         CryptoCrazeVisaCard(cardColour)

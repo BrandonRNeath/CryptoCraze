@@ -1,5 +1,6 @@
 package com.nemesisprotocol.cryptocraze.presentation.wallet_screen.add_wallet
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.google.gson.Gson
 import com.nemesisprotocol.cryptocraze.Screen
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletViewModel
 
@@ -47,11 +49,16 @@ fun AddPaymentCardDialog(
                             items(paymentCards.value) {
                                 Card(modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(top = 8.dp)) {
+                                    .padding(top = 8.dp)
+                                    .clickable {
+                                        navController.navigate(
+                                            Screen.AddPaymentCard.route + "/${Gson().toJson(it)}"
+                                        )
+                                    }) {
                                     val cardNumberAsString = it.cardNumber.toString()
                                     val lastFourDigits =
                                         cardNumberAsString.substring(cardNumberAsString.length - 4)
-                                    Text("Card ending $lastFourDigits", fontSize = 18.sp)
+                                    Text("Card ending **** **** **** $lastFourDigits", fontSize = 18.sp)
                                 }
                             }
                         }
@@ -65,7 +72,7 @@ fun AddPaymentCardDialog(
                         onClick = {
                             addPaymentCardDialog.value = false
                             navController.navigate(
-                                Screen.AddPaymentCard.route
+                                Screen.AddPaymentCard.route + "/ "
                             )
                         }
                     ) {

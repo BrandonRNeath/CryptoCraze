@@ -5,10 +5,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
+import com.google.gson.Gson
 import com.nemesisprotocol.cryptocraze.Screen
+import com.nemesisprotocol.cryptocraze.domain.payment_info.CryptoCrazeVisaCard
+import com.nemesisprotocol.cryptocraze.domain.payment_info.FiatWalletCard
 import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeScreen
 import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeViewModel
 import com.nemesisprotocol.cryptocraze.presentation.info_screen.InfoScreen
@@ -66,12 +71,28 @@ fun Navigation(
             CoinInfoScreen()
         }
 
-        composable(Screen.AddPaymentCard.route) {
-            AddPaymentScreen(navController)
+        composable(
+            Screen.AddPaymentCard.route + "/{savedFiatWalletCard}",
+            arguments = listOf(navArgument("savedFiatWalletCard") {
+                type = NavType.StringType
+            })
+        ) { backStackEntry ->
+            backStackEntry.arguments?.getString("savedFiatWalletCard").let { json ->
+                val fiatWalletCard = Gson().fromJson(json, FiatWalletCard::class.java)
+                AddPaymentScreen(navController, fiatWalletCard)
+            }
         }
 
-        composable(Screen.AddCryptoCrazeVisaCard.route) {
-            AddCryptoCrazeVisaCardScreen(navController)
+        composable(
+            Screen.AddCryptoCrazeVisaCard.route + "/{savedCryptoCrazeVisaCard}",
+            arguments = listOf(navArgument("savedCryptoCrazeVisaCard") {
+                type = NavType.StringType
+            })
+        ) { backStackEntry ->
+            backStackEntry.arguments?.getString("savedCryptoCrazeVisaCard").let { json ->
+                val cryptoCrazeVisaCard = Gson().fromJson(json, CryptoCrazeVisaCard::class.java)
+                AddCryptoCrazeVisaCardScreen(navController, cryptoCrazeVisaCard)
+            }
         }
 
         composable(Screen.CryptoCrazeVisaCardAdded.route) {

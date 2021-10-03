@@ -125,5 +125,9 @@ dependencies {
     // Lottie
     implementation 'com.airbnb.android:lottie-compose:4.0.0'
 
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.8'
+
+
 
 }

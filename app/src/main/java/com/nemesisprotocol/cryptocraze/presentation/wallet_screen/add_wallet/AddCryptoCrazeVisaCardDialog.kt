@@ -1,5 +1,6 @@
 package com.nemesisprotocol.cryptocraze.presentation.wallet_screen.add_wallet
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.google.gson.Gson
 import com.nemesisprotocol.cryptocraze.Screen
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletViewModel
 
@@ -43,10 +45,21 @@ fun AddCryptoCrazeVisaCardDialog(
                     if (cryptoCrazeVisaCards.value.isNotEmpty()) {
                         LazyColumn {
                             items(cryptoCrazeVisaCards.value) {
-                                Card(modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 8.dp)) {
-                                    Text("Crypto Craze ${it.cryptoCrazeVisaColour.name} Visa Card", fontSize = 18.sp)
+                                Card(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 8.dp)
+                                        .clickable {
+                                            navController.navigate(
+                                                Screen.AddCryptoCrazeVisaCard.route +
+                                                        "/${Gson().toJson(it)}"
+                                            )
+                                        }
+                                ) {
+                                    Text(
+                                        "Crypto Craze ${it.cryptoCrazeVisaColour.name} Visa Card",
+                                        fontSize = 18.sp
+                                    )
                                 }
                             }
                         }
@@ -60,7 +73,7 @@ fun AddCryptoCrazeVisaCardDialog(
                         onClick = {
                             addCryptoCrazeVisaCardDialog.value = false
                             navController.navigate(
-                                Screen.AddCryptoCrazeVisaCard.route
+                                Screen.AddCryptoCrazeVisaCard.route + "/ "
                             )
                         }
                     ) {
@@ -77,8 +90,8 @@ fun AddCryptoCrazeVisaCardDialog(
                         Text("Cancel")
                     }
                 }, shape = RoundedCornerShape(30.dp)
-                )
-            }
+            )
         }
     }
+}
     
