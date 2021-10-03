@@ -17,9 +17,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.nemesisprotocol.cryptocraze.R
 import com.nemesisprotocol.cryptocraze.Screen
+import com.nemesisprotocol.cryptocraze.domain.payment_info.CryptoCrazeVisaCard
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.CryptoCrazeVisaColour
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletViewModel
-import com.nemesisprotocol.cryptocraze.domain.payment_info.CryptoCrazeVisaCard
 
 @ExperimentalAnimationApi
 @Composable
@@ -96,7 +96,8 @@ fun AddCryptoCrazeVisaCardScreen(
                         CryptoCrazeVisaCard(cryptoCrazeVisaColour = cardColour.value)
                     )
                     navController.navigate(Screen.CryptoCrazeVisaCardAdded.route)
-                }) {
+                }
+            ) {
                 Text("Create Visa Card")
             }
         }

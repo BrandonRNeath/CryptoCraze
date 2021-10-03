@@ -8,4 +8,3 @@ class AddCryptoCrazeVisaCardUseCase @Inject constructor(private val paymentInfoR
     operator fun invoke(cryptoCrazeVisaCard: CryptoCrazeVisaCard) =
         paymentInfoRepo.addCryptoCrazeVisaCard(cryptoCrazeVisaCard)
 }
-

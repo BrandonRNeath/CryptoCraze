@@ -139,7 +139,7 @@ fun AddPaymentScreen(navController: NavHostController, fiatWalletCard: FiatWalle
                 item {
                     Button(
                         onClick = {
-                                walletViewModel.addFiatWallet(
+                            walletViewModel.addFiatWallet(
                                 FiatWalletCard(
                                     cardNumber.text.toLong(),
                                     cardNameText.text,

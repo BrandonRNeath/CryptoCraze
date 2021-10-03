@@ -19,7 +19,7 @@ import com.nemesisprotocol.cryptocraze.Screen
 import kotlinx.coroutines.delay
 
 @Composable
-fun CryptoCrazeVisaCardAddedScreen(navController : NavController) {
+fun CryptoCrazeVisaCardAddedScreen(navController: NavController) {
 
     LaunchedEffect(key1 = true) {
         delay(2500L)

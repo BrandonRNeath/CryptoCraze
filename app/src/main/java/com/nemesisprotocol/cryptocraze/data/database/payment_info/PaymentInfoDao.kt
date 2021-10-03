@@ -31,5 +31,4 @@ interface PaymentInfoDao {
 
     @Delete
     fun deleteCryptoCrazeVisaCard(cryptoCrazeVisaCard: CryptoCrazeVisaCard)
-
 }

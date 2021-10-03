@@ -29,7 +29,7 @@ fun AddPaymentCardDialog(
     addPaymentCardDialog: MutableState<Boolean>,
     navController: NavHostController,
 
-    ) {
+) {
     val walletViewModel: WalletViewModel = hiltViewModel()
     val paymentCards = walletViewModel.paymentCards.collectAsState()
 
@@ -47,14 +47,16 @@ fun AddPaymentCardDialog(
                     if (paymentCards.value.isNotEmpty()) {
                         LazyColumn {
                             items(paymentCards.value) {
-                                Card(modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 8.dp)
-                                    .clickable {
-                                        navController.navigate(
-                                            Screen.AddPaymentCard.route + "/${Gson().toJson(it)}"
-                                        )
-                                    }) {
+                                Card(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 8.dp)
+                                        .clickable {
+                                            navController.navigate(
+                                                Screen.AddPaymentCard.route + "/${Gson().toJson(it)}"
+                                            )
+                                        }
+                                ) {
                                     val cardNumberAsString = it.cardNumber.toString()
                                     val lastFourDigits =
                                         cardNumberAsString.substring(cardNumberAsString.length - 4)
@@ -89,8 +91,8 @@ fun AddPaymentCardDialog(
                         Text("Cancel")
                     }
                 }, shape = RoundedCornerShape(30.dp)
-            )
+                )
+            }
         }
     }
-}
     

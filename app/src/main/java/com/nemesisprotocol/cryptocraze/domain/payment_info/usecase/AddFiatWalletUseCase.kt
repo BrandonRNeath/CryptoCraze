@@ -8,4 +8,3 @@ class AddFiatWalletUseCase @Inject constructor(private val paymentInfoRepo: Paym
     operator fun invoke(fiatWalletCard: FiatWalletCard) =
         paymentInfoRepo.addFiatWallet(fiatWalletCard)
 }
-

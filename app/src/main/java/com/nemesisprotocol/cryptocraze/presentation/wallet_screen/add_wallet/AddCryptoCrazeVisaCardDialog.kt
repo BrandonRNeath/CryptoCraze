@@ -52,7 +52,7 @@ fun AddCryptoCrazeVisaCardDialog(
                                         .clickable {
                                             navController.navigate(
                                                 Screen.AddCryptoCrazeVisaCard.route +
-                                                        "/${Gson().toJson(it)}"
+                                                    "/${Gson().toJson(it)}"
                                             )
                                         }
                                 ) {
@@ -90,8 +90,8 @@ fun AddCryptoCrazeVisaCardDialog(
                         Text("Cancel")
                     }
                 }, shape = RoundedCornerShape(30.dp)
-            )
+                )
+            }
         }
     }
-}
     

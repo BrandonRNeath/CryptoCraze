@@ -73,9 +73,11 @@ fun Navigation(
 
         composable(
             Screen.AddPaymentCard.route + "/{savedFiatWalletCard}",
-            arguments = listOf(navArgument("savedFiatWalletCard") {
-                type = NavType.StringType
-            })
+            arguments = listOf(
+                navArgument("savedFiatWalletCard") {
+                    type = NavType.StringType
+                }
+            )
         ) { backStackEntry ->
             backStackEntry.arguments?.getString("savedFiatWalletCard").let { json ->
                 val fiatWalletCard = Gson().fromJson(json, FiatWalletCard::class.java)
@@ -85,9 +87,11 @@ fun Navigation(
 
         composable(
             Screen.AddCryptoCrazeVisaCard.route + "/{savedCryptoCrazeVisaCard}",
-            arguments = listOf(navArgument("savedCryptoCrazeVisaCard") {
-                type = NavType.StringType
-            })
+            arguments = listOf(
+                navArgument("savedCryptoCrazeVisaCard") {
+                    type = NavType.StringType
+                }
+            )
         ) { backStackEntry ->
             backStackEntry.arguments?.getString("savedCryptoCrazeVisaCard").let { json ->
                 val cryptoCrazeVisaCard = Gson().fromJson(json, CryptoCrazeVisaCard::class.java)
@@ -102,6 +106,5 @@ fun Navigation(
         composable(Screen.PaymentCardAdded.route) {
             PaymentCardAddedScreen(navController)
         }
-
     }
 }

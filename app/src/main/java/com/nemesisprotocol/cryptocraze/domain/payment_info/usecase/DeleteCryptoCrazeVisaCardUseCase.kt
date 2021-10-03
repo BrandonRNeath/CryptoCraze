@@ -8,4 +8,3 @@ class DeleteCryptoCrazeVisaCardUseCase @Inject constructor(private val paymentIn
     operator fun invoke(cryptoCrazeVisaCard: CryptoCrazeVisaCard) =
         paymentInfoRepo.deleteCryptoCrazeVisaCard(cryptoCrazeVisaCard)
 }
-

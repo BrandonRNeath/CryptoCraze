@@ -1,7 +1,7 @@
 package com.nemesisprotocol.cryptocraze.domain.payment_info
 
 interface PaymentInfoRepo {
-    fun getFiatWallets() : List<FiatWalletCard>
+    fun getFiatWallets(): List<FiatWalletCard>
     fun getFiatWalletByCardNumber(cardNumber: Long): FiatWalletCard
     fun addFiatWallet(fiatWalletCard: FiatWalletCard)
     fun deleteFiatWallet(fiatWalletCard: FiatWalletCard)
