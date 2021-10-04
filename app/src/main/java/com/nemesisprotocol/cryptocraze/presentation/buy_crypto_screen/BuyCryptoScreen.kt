@@ -4,12 +4,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -22,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoDataPriceInfo
+import com.nemesisprotocol.cryptocraze.domain.payment_info.CryptoCrazeVisaCard
+import com.nemesisprotocol.cryptocraze.domain.payment_info.FiatWalletCard
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletViewModel
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.add_wallet.InputItem
 
@@ -30,10 +34,12 @@ fun BuyCryptoScreen(cryptoData: CryptoDataPriceInfo) {
     val walletViewModel: WalletViewModel = hiltViewModel()
     val paymentCards = walletViewModel.paymentCards.collectAsState()
     val cryptoCrazeVisaCards = walletViewModel.cryptoCrazeVisaCards.collectAsState()
-
-    var amountOfCrypto by remember {
-        mutableStateOf(TextFieldValue())
-    }
+    val fiatWalletOptionSelected = remember { mutableStateOf(false) }
+    val cryptoCrazeVisaCardOptionSelected = remember { mutableStateOf(false) }
+    val canPurchase = remember { mutableStateOf(false) }
+    var amountOfCrypto by remember { mutableStateOf(TextFieldValue()) }
+    var selectedFiatWallet: FiatWalletCard? = null
+    var selectedCryptoCrazeVisaCard: CryptoCrazeVisaCard? = null
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -95,50 +101,115 @@ fun BuyCryptoScreen(cryptoData: CryptoDataPriceInfo) {
                     Modifier.padding(start = 18.dp),
                     fontWeight = Bold
                 )
-                Text(
-                    text = "From Fiat Wallet",
-                    Modifier.padding(start = 18.dp, top = 8.dp),
-                    fontStyle = FontStyle.Italic
-                )
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(64.dp)
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp)
+                        .clickable(!cryptoCrazeVisaCardOptionSelected.value) {
+                            fiatWalletOptionSelected.value = !fiatWalletOptionSelected.value
+                            if (!fiatWalletOptionSelected.value) selectedFiatWallet = null
+                        }
+                ) {
+                    Row {
+                        Text(
+                            text = "From Fiat Wallet",
+                            Modifier
+                                .padding(start = 18.dp, top = 8.dp)
+                                .weight(1f),
+                            fontStyle = FontStyle.Italic
+                        )
+                        if (fiatWalletOptionSelected.value) Icon(
+                            imageVector = Icons.Default.KeyboardArrowUp,
+                            contentDescription = null,
+                            modifier = Modifier.size(32.dp)
+                        )
+                        else Icon(
+                            imageVector = Icons.Default.KeyboardArrowDown,
+                            contentDescription = null,
+                            modifier = Modifier.size(32.dp)
+                        )
+                    }
+                }
             }
         }
-
-        items(paymentCards.value) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(40.dp)
-                    .padding(top = 8.dp, start = 16.dp, end = 16.dp)
-                    .clickable {
-                    }
-            ) {
-                val cardNumberAsString = it.cardNumber.toString()
-                val lastFourDigits =
-                    cardNumberAsString.substring(cardNumberAsString.length - 4)
-                Text("Card ending **** **** **** $lastFourDigits", fontSize = 18.sp)
+        if (fiatWalletOptionSelected.value) {
+            items(paymentCards.value) {
+                val isSelected = remember { mutableStateOf(false) }
+                Card(
+                    backgroundColor = if (isSelected.value) Color.Gray else MaterialTheme.colors.surface,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp)
+                        .clickable {
+                            isSelected.value = !isSelected.value
+                            canPurchase.value = isSelected.value
+                            selectedFiatWallet = it
+                        }
+                ) {
+                    val cardNumberAsString = it.cardNumber.toString()
+                    val lastFourDigits =
+                        cardNumberAsString.substring(cardNumberAsString.length - 4)
+                    Text("Card ending **** **** **** $lastFourDigits", fontSize = 18.sp)
+                }
             }
         }
         item {
-            Text(
-                text = "From Crypto Craze Visa Card",
-                Modifier.padding(start = 18.dp, top = 16.dp),
-                fontStyle = FontStyle.Italic
-            )
-        }
-
-        items(cryptoCrazeVisaCards.value) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(40.dp)
+                    .height(64.dp)
                     .padding(top = 8.dp, start = 16.dp, end = 16.dp)
-                    .clickable {
+                    .clickable(!fiatWalletOptionSelected.value) {
+                        cryptoCrazeVisaCardOptionSelected.value =
+                            !cryptoCrazeVisaCardOptionSelected.value
+                        if (!cryptoCrazeVisaCardOptionSelected.value) selectedCryptoCrazeVisaCard =
+                            null
                     }
             ) {
-                Text(
-                    "Crypto Craze ${it.cryptoCrazeVisaColour.name} Visa Card",
-                    fontSize = 18.sp
-                )
+                Row {
+                    Text(
+                        text = "From Crypto Craze Visa Card",
+                        Modifier
+                            .padding(start = 18.dp, top = 16.dp)
+                            .weight(1f),
+                        fontStyle = FontStyle.Italic
+                    )
+                    if (cryptoCrazeVisaCardOptionSelected.value) Icon(
+                        imageVector = Icons.Default.KeyboardArrowUp,
+                        contentDescription = null,
+                        modifier = Modifier.size(32.dp)
+                    )
+                    else Icon(
+                        imageVector = Icons.Default.KeyboardArrowDown,
+                        contentDescription = null,
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+            }
+        }
+
+        if (cryptoCrazeVisaCardOptionSelected.value) {
+            items(cryptoCrazeVisaCards.value) {
+                val isSelected = remember { mutableStateOf(false) }
+                Card(
+                    backgroundColor = if (isSelected.value) Color.Gray else MaterialTheme.colors.surface,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp)
+                        .clickable {
+                            isSelected.value = !isSelected.value
+                            canPurchase.value = isSelected.value
+                            selectedCryptoCrazeVisaCard = it
+                        }
+                ) {
+                    Text(
+                        "Crypto Craze ${it.cryptoCrazeVisaColour.name} Visa Card",
+                        fontSize = 18.sp
+                    )
+                }
             }
         }
 
@@ -151,11 +222,21 @@ fun BuyCryptoScreen(cryptoData: CryptoDataPriceInfo) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(
-                    onClick = {},
-                    enabled = false,
+                    onClick = {
+                        if (selectedFiatWallet != null) {
+
+                        } else {
+
+                        }
+                    },
+                    enabled = canPurchase.value && amountOfCrypto.text.isNotEmpty(),
                     modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
                 ) {
-                    Text(text = "Purchase ${cryptoData.symbol.uppercase()}", fontSize = 24.sp)
+                    if (amountOfCrypto.text.isNotEmpty()) Text(
+                        text = "Buy ${amountOfCrypto.text} ${cryptoData.symbol.uppercase()}",
+                        fontSize = 24.sp
+                    )
+                    else Text(text = "Buy ${cryptoData.symbol.uppercase()}", fontSize = 24.sp)
                 }
             }
         }
