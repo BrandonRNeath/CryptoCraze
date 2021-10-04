@@ -1,4 +1,4 @@
-package com.nemesisprotocol.cryptocraze.presentation.buy_crypto_screen
+package com.nemesisprotocol.cryptocraze.presentation.crypto_transaction_screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,7 +16,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
@@ -30,16 +29,19 @@ import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletViewMode
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.add_wallet.InputItem
 
 @Composable
-fun BuyCryptoScreen(cryptoData: CryptoDataPriceInfo) {
+fun CryptoTransactionScreen(cryptoData: CryptoDataPriceInfo, transactionType: TransactionType) {
     val walletViewModel: WalletViewModel = hiltViewModel()
     val paymentCards = walletViewModel.paymentCards.collectAsState()
     val cryptoCrazeVisaCards = walletViewModel.cryptoCrazeVisaCards.collectAsState()
     val fiatWalletOptionSelected = remember { mutableStateOf(false) }
     val cryptoCrazeVisaCardOptionSelected = remember { mutableStateOf(false) }
-    val canPurchase = remember { mutableStateOf(false) }
+    val canPerformTransaction = remember { mutableStateOf(false) }
     var amountOfCrypto by remember { mutableStateOf(TextFieldValue()) }
     var selectedFiatWallet: FiatWalletCard? = null
     var selectedCryptoCrazeVisaCard: CryptoCrazeVisaCard? = null
+    val transactionTypeString =
+        Character.toUpperCase(transactionType.name[0]) + transactionType.name.lowercase()
+            .substring(1)
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -52,21 +54,21 @@ fun BuyCryptoScreen(cryptoData: CryptoDataPriceInfo) {
                     .fillMaxWidth()
             ) {
                 Text(
-                    text = "Buy ${cryptoData.symbol.uppercase()}",
+                    text = "$transactionTypeString ${cryptoData.symbol.uppercase()}",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 32.dp),
                     textAlign = TextAlign.Center,
-                    fontWeight = Bold,
+                    fontWeight = FontWeight.Bold,
                     fontSize = 24.sp
                 )
                 Text(
-                    text = "Enter how much ${cryptoData.symbol.uppercase()} you would like to buy",
+                    text = "Enter how much ${cryptoData.symbol.uppercase()} you would like to $transactionTypeString",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 32.dp),
                     textAlign = TextAlign.Center,
-                    fontWeight = Bold,
+                    fontWeight = FontWeight.Bold,
                     fontSize = 16.sp
                 )
 
@@ -99,7 +101,7 @@ fun BuyCryptoScreen(cryptoData: CryptoDataPriceInfo) {
                 Text(
                     text = "Select Payment method below",
                     Modifier.padding(start = 18.dp),
-                    fontWeight = Bold
+                    fontWeight = FontWeight.Bold
                 )
                 Card(
                     modifier = Modifier
@@ -144,7 +146,7 @@ fun BuyCryptoScreen(cryptoData: CryptoDataPriceInfo) {
                         .padding(top = 8.dp, start = 16.dp, end = 16.dp)
                         .clickable {
                             isSelected.value = !isSelected.value
-                            canPurchase.value = isSelected.value
+                            canPerformTransaction.value = isSelected.value
                             selectedFiatWallet = it
                         }
                 ) {
@@ -201,7 +203,7 @@ fun BuyCryptoScreen(cryptoData: CryptoDataPriceInfo) {
                         .padding(top = 8.dp, start = 16.dp, end = 16.dp)
                         .clickable {
                             isSelected.value = !isSelected.value
-                            canPurchase.value = isSelected.value
+                            canPerformTransaction.value = isSelected.value
                             selectedCryptoCrazeVisaCard = it
                         }
                 ) {
@@ -224,19 +226,17 @@ fun BuyCryptoScreen(cryptoData: CryptoDataPriceInfo) {
                 Button(
                     onClick = {
                         if (selectedFiatWallet != null) {
-
                         } else {
-
                         }
                     },
-                    enabled = canPurchase.value && amountOfCrypto.text.isNotEmpty(),
+                    enabled = canPerformTransaction.value && amountOfCrypto.text.isNotEmpty(),
                     modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
                 ) {
                     if (amountOfCrypto.text.isNotEmpty()) Text(
-                        text = "Buy ${amountOfCrypto.text} ${cryptoData.symbol.uppercase()}",
+                        text = "$transactionTypeString ${amountOfCrypto.text} ${cryptoData.symbol.uppercase()}",
                         fontSize = 24.sp
                     )
-                    else Text(text = "Buy ${cryptoData.symbol.uppercase()}", fontSize = 24.sp)
+                    else Text(text = "$transactionTypeString ${cryptoData.symbol.uppercase()}", fontSize = 24.sp)
                 }
             }
         }

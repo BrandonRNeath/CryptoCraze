@@ -15,7 +15,8 @@ import com.nemesisprotocol.cryptocraze.Screen
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoDataPriceInfo
 import com.nemesisprotocol.cryptocraze.domain.payment_info.CryptoCrazeVisaCard
 import com.nemesisprotocol.cryptocraze.domain.payment_info.FiatWalletCard
-import com.nemesisprotocol.cryptocraze.presentation.buy_crypto_screen.BuyCryptoScreen
+import com.nemesisprotocol.cryptocraze.presentation.crypto_transaction_screen.CryptoTransactionScreen
+import com.nemesisprotocol.cryptocraze.presentation.crypto_transaction_screen.TransactionType
 import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeScreen
 import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeViewModel
 import com.nemesisprotocol.cryptocraze.presentation.info_screen.InfoScreen
@@ -23,7 +24,6 @@ import com.nemesisprotocol.cryptocraze.presentation.info_screen.coin_info.CoinIn
 import com.nemesisprotocol.cryptocraze.presentation.login.login_screen.LoginScreen
 import com.nemesisprotocol.cryptocraze.presentation.login.signup_screen.SignUpScreen
 import com.nemesisprotocol.cryptocraze.presentation.messenger.MessengerScreen
-import com.nemesisprotocol.cryptocraze.presentation.sell_crypto_screen.SellCryptoScreen
 import com.nemesisprotocol.cryptocraze.presentation.splash_screen.SplashScreen
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.CryptoCrazeVisaCardAddedScreen
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.PaymentCardAddedScreen
@@ -111,30 +111,20 @@ fun Navigation(
         }
 
         composable(
-            Screen.BuyCrypto.route + "/{cryptoDataPriceInfo}",
+            Screen.CryptoTransaction.route + "/{cryptoDataPriceInfo}/{transactionType}",
             arguments = listOf(
                 navArgument("cryptoDataPriceInfo") {
+                    type = NavType.StringType
+                },
+                navArgument("transactionType") {
                     type = NavType.StringType
                 }
             )
         ) { backStackEntry ->
+            val transactionType = backStackEntry.arguments?.getString("transactionType")
             backStackEntry.arguments?.getString("cryptoDataPriceInfo").let { json ->
                 val cryptoData = Gson().fromJson(json, CryptoDataPriceInfo::class.java)
-                BuyCryptoScreen(cryptoData)
-            }
-        }
-
-        composable(
-            Screen.SellCrypto.route + "/{cryptoDataPriceInfo}",
-            arguments = listOf(
-                navArgument("cryptoDataPriceInfo") {
-                    type = NavType.StringType
-                }
-            )
-        ) { backStackEntry ->
-            backStackEntry.arguments?.getString("cryptoDataPriceInfo").let { json ->
-                val cryptoData = Gson().fromJson(json, CryptoDataPriceInfo::class.java)
-                SellCryptoScreen(cryptoData)
+                CryptoTransactionScreen(cryptoData, TransactionType.valueOf(transactionType!!))
             }
         }
     }

@@ -15,6 +15,5 @@ sealed class Screen(val route: String, val icon: Int?, val title: String) {
     object CryptoCrazeLogo : Screen("cryptocraze_icon", R.drawable.cryptocraze_icon, "CryptoCraze Icon")
     object CryptoCrazeVisaCardAdded : Screen("crypto_craze_visa_card_added", null, "Crypto Craze Visa Card Added")
     object PaymentCardAdded : Screen("payment_card_added", null, "Payment Card Added")
-    object BuyCrypto : Screen("buy_crypto", null, "Buy Crypto")
-    object SellCrypto : Screen("sell_crypto", null, "Sell Crypto")
+    object CryptoTransaction : Screen("crypto_transaction", null, "Crypto Transaction")
 }

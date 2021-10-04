@@ -33,6 +33,7 @@ import com.google.gson.Gson
 import com.nemesisprotocol.cryptocraze.presentation.BottomNavigationBar
 import com.nemesisprotocol.cryptocraze.presentation.BottomSheetContent
 import com.nemesisprotocol.cryptocraze.presentation.Navigation
+import com.nemesisprotocol.cryptocraze.presentation.crypto_transaction_screen.TransactionType
 import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeViewModel
 import com.nemesisprotocol.cryptocraze.presentation.ui.theme.CryptoCrazeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -154,11 +155,7 @@ class MainActivity : ComponentActivity() {
                                                             coroutineScope.launch {
                                                                 bottomSheetScaffoldState.bottomSheetState.collapse()
                                                                 navController.navigate(
-                                                                    Screen.BuyCrypto.route + "/${
-                                                                    Gson().toJson(
-                                                                        it.mapPriceInfo()
-                                                                    )
-                                                                    }"
+                                                                    Screen.CryptoTransaction.route + "/${Gson().toJson(it.mapPriceInfo())}/${TransactionType.BUY.name}"
                                                                 )
                                                             }
                                                         }
@@ -261,11 +258,7 @@ class MainActivity : ComponentActivity() {
                                                             coroutineScope.launch {
                                                                 bottomSheetScaffoldState.bottomSheetState.collapse()
                                                                 navController.navigate(
-                                                                    Screen.SellCrypto.route + "/${
-                                                                    Gson().toJson(
-                                                                        it.mapPriceInfo()
-                                                                    )
-                                                                    }"
+                                                                    Screen.CryptoTransaction.route + "/${Gson().toJson(it.mapPriceInfo())}/${TransactionType.SELL.name}"
                                                                 )
                                                             }
                                                         }
