@@ -129,7 +129,7 @@ fun SignUp(
             text = stringResource(id = R.string.have_account_already_sign_in_instead),
             modifier = Modifier
                 .clickable {
-                    navController.navigate(Screen.Login.route) // onPageChange(LoginViewModel.Page.SIGN_IN)
+                    navController.navigate(Screen.Login.route)
                 }
                 .padding(vertical = 20.dp, horizontal = 10.dp),
             color = MaterialTheme.colors.onBackground

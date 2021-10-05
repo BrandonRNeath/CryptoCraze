@@ -5,12 +5,13 @@ import com.nemesisprotocol.cryptocraze.common.DispatcherProvider
 import com.nemesisprotocol.cryptocraze.data.crypto_data.remote.CryptoDataApi
 import com.nemesisprotocol.cryptocraze.data.crypto_data.remote.CryptoDataApiMapper
 import com.nemesisprotocol.cryptocraze.data.crypto_info.remote.CoinPaprikaApi
-import com.nemesisprotocol.cryptocraze.data.repos.CoinRepositoryImpl
-import com.nemesisprotocol.cryptocraze.data.repos.CryptoDataRepoImpl
-import com.nemesisprotocol.cryptocraze.data.repos.PaymentInfoRepoImpl
+import com.nemesisprotocol.cryptocraze.data.repos.*
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoDataRepo
+import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoFavDataRepo
 import com.nemesisprotocol.cryptocraze.domain.crypto_info.CoinRepo
 import com.nemesisprotocol.cryptocraze.domain.payment_info.PaymentInfoRepo
+import com.nemesisprotocol.cryptocraze.domain.transaction_history.TransactionHistoryRepo
+import com.nemesisprotocol.cryptocraze.domain.user.UserRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,6 +25,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideUserRepo(userRepoImpl: UserRepoImpl): UserRepo = userRepoImpl
+
     @Provides
     @Singleton
     fun provideCryptoDataApi(): CryptoDataApi {
@@ -44,6 +50,11 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideCryptoFavDataRepo(cryptoFavDataRepoImpl: CryptoFavDataRepoImpl): CryptoFavDataRepo =
+        cryptoFavDataRepoImpl
+
+    @Provides
+    @Singleton
     fun providePaprikaApi(): CoinPaprikaApi {
         return Retrofit.Builder()
             .baseUrl(Constants.COIN_PAPRIKA_BASE_URL)
@@ -60,6 +71,11 @@ object AppModule {
     @Singleton
     fun providePaymentInfoRepo(paymentInfoRepoImpl: PaymentInfoRepoImpl): PaymentInfoRepo =
         paymentInfoRepoImpl
+
+    @Provides
+    @Singleton
+    fun provideTransactionHistoryRepo(transactionHistoryRepoImpl: TransactionHistoryRepoImpl):
+        TransactionHistoryRepo = transactionHistoryRepoImpl
 
     @Singleton
     @Provides

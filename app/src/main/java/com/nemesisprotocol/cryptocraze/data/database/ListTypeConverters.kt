@@ -2,7 +2,7 @@ package com.nemesisprotocol.cryptocraze.data.database
 
 import androidx.room.TypeConverter
 
-class ListTypeConverter {
+class ListTypeConverters {
     companion object {
         @TypeConverter
         @JvmStatic

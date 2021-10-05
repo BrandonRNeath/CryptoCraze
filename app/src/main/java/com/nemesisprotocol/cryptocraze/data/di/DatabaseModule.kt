@@ -6,12 +6,10 @@ import com.nemesisprotocol.cryptocraze.data.database.crypto_fav_data.CryptoFavDa
 import com.nemesisprotocol.cryptocraze.data.database.crypto_fav_data.CryptoFavDataDatabase
 import com.nemesisprotocol.cryptocraze.data.database.payment_info.PaymentInfoDao
 import com.nemesisprotocol.cryptocraze.data.database.payment_info.PaymentInfoDatabase
+import com.nemesisprotocol.cryptocraze.data.database.transaction_history.TransactionHistoryDao
+import com.nemesisprotocol.cryptocraze.data.database.transaction_history.TransactionHistoryDatabase
 import com.nemesisprotocol.cryptocraze.data.database.user.UserDao
 import com.nemesisprotocol.cryptocraze.data.database.user.UserDatabase
-import com.nemesisprotocol.cryptocraze.data.repos.CryptoFavDataRepoImpl
-import com.nemesisprotocol.cryptocraze.data.repos.UserRepoImpl
-import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoFavDataRepo
-import com.nemesisprotocol.cryptocraze.domain.user.UserRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,27 +32,40 @@ class DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideUserRepo(userRepoImpl: UserRepoImpl): UserRepo = userRepoImpl
-
-    @Provides
-    @Singleton
     fun provideCryptoDataDatabase(@ApplicationContext context: Context): CryptoFavDataDatabase {
-        return Room.databaseBuilder(context, CryptoFavDataDatabase::class.java, "crypto_fav_data_db").build()
+        return Room.databaseBuilder(
+            context,
+            CryptoFavDataDatabase::class.java,
+            "crypto_fav_data_db"
+        ).build()
     }
 
     @Provides
-    fun provideCryptoDataDao(cryptoFavDataDatabase: CryptoFavDataDatabase): CryptoFavDataDao = cryptoFavDataDatabase.cryptoFavDataDao()
-
-    @Provides
-    @Singleton
-    fun provideCryptoFavDataRepo(cryptoFavDataRepoImpl: CryptoFavDataRepoImpl): CryptoFavDataRepo = cryptoFavDataRepoImpl
+    fun provideCryptoDataDao(cryptoFavDataDatabase: CryptoFavDataDatabase): CryptoFavDataDao =
+        cryptoFavDataDatabase.cryptoFavDataDao()
 
     @Provides
     @Singleton
     fun providePaymentInfoDatabase(@ApplicationContext context: Context): PaymentInfoDatabase {
-        return Room.databaseBuilder(context, PaymentInfoDatabase::class.java, "payment_info_db").build()
+        return Room.databaseBuilder(context, PaymentInfoDatabase::class.java, "payment_info_db")
+            .build()
     }
 
     @Provides
-    fun providePaymentInfoDao(paymentInfoDatabase: PaymentInfoDatabase): PaymentInfoDao = paymentInfoDatabase.paymentInfoDao()
+    fun providePaymentInfoDao(paymentInfoDatabase: PaymentInfoDatabase): PaymentInfoDao =
+        paymentInfoDatabase.paymentInfoDao()
+
+    @Provides
+    fun provideTransactionHistoryDao(transactionHistoryDatabase: TransactionHistoryDatabase): TransactionHistoryDao =
+        transactionHistoryDatabase.transactionHistoryDao()
+
+    @Provides
+    @Singleton
+    fun provideTransactionHistoryDatabase(@ApplicationContext context: Context): TransactionHistoryDatabase {
+        return Room.databaseBuilder(
+            context,
+            TransactionHistoryDatabase::class.java,
+            "transaction_history_db"
+        ).build()
+    }
 }
