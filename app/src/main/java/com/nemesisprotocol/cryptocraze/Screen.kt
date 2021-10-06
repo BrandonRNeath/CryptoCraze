@@ -16,4 +16,5 @@ sealed class Screen(val route: String, val icon: Int?, val title: String) {
     object CryptoCrazeVisaCardAdded : Screen("crypto_craze_visa_card_added", null, "Crypto Craze Visa Card Added")
     object PaymentCardAdded : Screen("payment_card_added", null, "Payment Card Added")
     object CryptoTransaction : Screen("crypto_transaction", null, "Crypto Transaction")
+    object CryptoTransactionConfirmation : Screen("crypto_transaction_confirmation", null, "Crypto Transaction Confirmation")
 }

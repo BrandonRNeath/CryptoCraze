@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoDataPriceInfo
 import com.nemesisprotocol.cryptocraze.domain.payment_info.CryptoCrazeVisaCard
 import com.nemesisprotocol.cryptocraze.domain.payment_info.FiatWalletCard
@@ -29,19 +30,34 @@ import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletViewMode
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.add_wallet.InputItem
 
 @Composable
-fun CryptoTransactionScreen(cryptoData: CryptoDataPriceInfo, transactionType: TransactionType) {
+fun CryptoTransactionScreen(
+    cryptoData: CryptoDataPriceInfo,
+    transactionType: TransactionType,
+    navController: NavHostController
+) {
     val walletViewModel: WalletViewModel = hiltViewModel()
+    val cryptoTransactionViewModel: CryptoTransactionViewModel = hiltViewModel()
+    val cryptoTransactionDialogOpenState = remember { mutableStateOf(false) }
     val paymentCards = walletViewModel.paymentCards.collectAsState()
     val cryptoCrazeVisaCards = walletViewModel.cryptoCrazeVisaCards.collectAsState()
     val fiatWalletOptionSelected = remember { mutableStateOf(false) }
     val cryptoCrazeVisaCardOptionSelected = remember { mutableStateOf(false) }
     val canPerformTransaction = remember { mutableStateOf(false) }
     var amountOfCrypto by remember { mutableStateOf(TextFieldValue()) }
-    var selectedFiatWallet: FiatWalletCard? = null
-    var selectedCryptoCrazeVisaCard: CryptoCrazeVisaCard? = null
+    var selectedFiatWallet: FiatWalletCard? by remember { mutableStateOf(null) }
+    var selectedCryptoCrazeVisaCard: CryptoCrazeVisaCard? by remember { mutableStateOf(null) }
     val transactionTypeString =
         Character.toUpperCase(transactionType.name[0]) + transactionType.name.lowercase()
             .substring(1)
+    CryptoTransactionDialog(
+        cryptoTransactionDialogOpenState = cryptoTransactionDialogOpenState,
+        navController = navController,
+        cryptoData = cryptoData,
+        amountOfCrypto = amountOfCrypto,
+        selectedFiatWallet = selectedFiatWallet,
+        selectedCryptoCrazeVisaCard = selectedCryptoCrazeVisaCard,
+        transactionType = transactionType
+    )
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -225,9 +241,7 @@ fun CryptoTransactionScreen(cryptoData: CryptoDataPriceInfo, transactionType: Tr
             ) {
                 Button(
                     onClick = {
-                        if (selectedFiatWallet != null) {
-                        } else {
-                        }
+                        cryptoTransactionDialogOpenState.value = true
                     },
                     enabled = canPerformTransaction.value && amountOfCrypto.text.isNotEmpty(),
                     modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
@@ -236,7 +250,10 @@ fun CryptoTransactionScreen(cryptoData: CryptoDataPriceInfo, transactionType: Tr
                         text = "$transactionTypeString ${amountOfCrypto.text} ${cryptoData.symbol.uppercase()}",
                         fontSize = 24.sp
                     )
-                    else Text(text = "$transactionTypeString ${cryptoData.symbol.uppercase()}", fontSize = 24.sp)
+                    else Text(
+                        text = "$transactionTypeString ${cryptoData.symbol.uppercase()}",
+                        fontSize = 24.sp
+                    )
                 }
             }
         }

@@ -15,6 +15,7 @@ import com.nemesisprotocol.cryptocraze.Screen
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoDataPriceInfo
 import com.nemesisprotocol.cryptocraze.domain.payment_info.CryptoCrazeVisaCard
 import com.nemesisprotocol.cryptocraze.domain.payment_info.FiatWalletCard
+import com.nemesisprotocol.cryptocraze.presentation.crypto_transaction_screen.CryptoTransactionConfirmation
 import com.nemesisprotocol.cryptocraze.presentation.crypto_transaction_screen.CryptoTransactionScreen
 import com.nemesisprotocol.cryptocraze.presentation.crypto_transaction_screen.TransactionType
 import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeScreen
@@ -124,8 +125,27 @@ fun Navigation(
             val transactionType = backStackEntry.arguments?.getString("transactionType")
             backStackEntry.arguments?.getString("cryptoDataPriceInfo").let { json ->
                 val cryptoData = Gson().fromJson(json, CryptoDataPriceInfo::class.java)
-                CryptoTransactionScreen(cryptoData, TransactionType.valueOf(transactionType!!))
+                CryptoTransactionScreen(
+                    cryptoData,
+                    TransactionType.valueOf(transactionType!!),
+                    navController
+                )
             }
+        }
+
+        composable(
+            Screen.CryptoTransactionConfirmation.route + "/{transactionType}",
+            arguments = listOf(
+                navArgument("transactionType") {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+            val transactionType = backStackEntry.arguments?.getString("transactionType")
+            CryptoTransactionConfirmation(
+                navController = navController,
+                transactionType = TransactionType.valueOf(transactionType!!)
+            )
         }
     }
 }
