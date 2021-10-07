@@ -60,8 +60,9 @@ fun CryptoTransactionDialog(
                                     .weight(1f)
                                     .padding(start = 8.dp)
                             )
+                            val roundedAmount =  "%.2f".format(cryptoData.price * amountOfCrypto.text.toDouble()).toDouble()
                             Text(
-                                text = "${amountOfCrypto.text} ${cryptoData.symbol.uppercase()} = £${cryptoData.price * amountOfCrypto.text.toDouble()}",
+                                text = "${amountOfCrypto.text} ${cryptoData.symbol.uppercase()} = £${roundedAmount}",
                                 modifier = Modifier
                                     .align(alignment = Alignment.CenterVertically)
                                     .padding(end = 8.dp)

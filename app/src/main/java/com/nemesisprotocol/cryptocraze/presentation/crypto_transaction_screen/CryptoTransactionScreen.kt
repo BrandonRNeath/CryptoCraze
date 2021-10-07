@@ -114,8 +114,9 @@ fun CryptoTransactionScreen(
                             canParse = false
                         }
                         if (canParse) {
+                            val roundedAmount =  "%.2f".format(cryptoData.price * amountOfCrypto.text.toDouble()).toDouble()
                             Text(
-                                text = "${amountOfCrypto.text} ${cryptoData.symbol.uppercase()} = £${cryptoData.price * amountOfCrypto.text.toDouble()}",
+                                text = "${amountOfCrypto.text} ${cryptoData.symbol.uppercase()} = £${roundedAmount}",
                                 fontSize = 20.sp,
                                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
                             )
