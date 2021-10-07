@@ -107,11 +107,19 @@ fun CryptoTransactionScreen(
                         )
                     )
                     if (amountOfCrypto.text.isNotEmpty()) {
-                        Text(
-                            text = "${amountOfCrypto.text} ${cryptoData.symbol.uppercase()} = £${cryptoData.price * amountOfCrypto.text.toDouble()}",
-                            fontSize = 20.sp,
-                            modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
-                        )
+                        var canParse = true
+                        try {
+                            amountOfCrypto.text.toDouble()
+                        } catch (numberFormatException: NumberFormatException) {
+                            canParse = false
+                        }
+                        if (canParse) {
+                            Text(
+                                text = "${amountOfCrypto.text} ${cryptoData.symbol.uppercase()} = £${cryptoData.price * amountOfCrypto.text.toDouble()}",
+                                fontSize = 20.sp,
+                                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+                            )
+                        }
                     }
                 }
                 Text(
