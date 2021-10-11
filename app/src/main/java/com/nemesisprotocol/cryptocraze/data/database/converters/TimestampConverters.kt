@@ -1,4 +1,4 @@
-package com.nemesisprotocol.cryptocraze.data.database
+package com.nemesisprotocol.cryptocraze.data.database.converters
 
 import androidx.room.TypeConverter
 import java.util.*

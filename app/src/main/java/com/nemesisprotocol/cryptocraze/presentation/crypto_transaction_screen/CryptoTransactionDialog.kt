@@ -16,6 +16,7 @@ import com.nemesisprotocol.cryptocraze.Screen
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoDataPriceInfo
 import com.nemesisprotocol.cryptocraze.domain.payment_info.CryptoCrazeVisaCard
 import com.nemesisprotocol.cryptocraze.domain.payment_info.FiatWalletCard
+import com.nemesisprotocol.cryptocraze.domain.transaction_history.TransactionRecord
 
 @Composable
 fun CryptoTransactionDialog(
@@ -25,7 +26,8 @@ fun CryptoTransactionDialog(
     amountOfCrypto: TextFieldValue,
     selectedFiatWallet: FiatWalletCard?,
     selectedCryptoCrazeVisaCard: CryptoCrazeVisaCard?,
-    transactionType: TransactionType
+    transactionType: TransactionType,
+    cryptoTransactionViewModel: CryptoTransactionViewModel
 ) {
     Column(
         Modifier
@@ -33,6 +35,8 @@ fun CryptoTransactionDialog(
             .fillMaxHeight()
     ) {
         if (cryptoTransactionDialogOpenState.value) {
+            val roundedAmount =
+                "%.2f".format(cryptoData.price * amountOfCrypto.text.toDouble()).toDouble()
             AlertDialog(
                 modifier = Modifier.wrapContentSize(),
                 onDismissRequest = {
@@ -60,9 +64,8 @@ fun CryptoTransactionDialog(
                                     .weight(1f)
                                     .padding(start = 8.dp)
                             )
-                            val roundedAmount =  "%.2f".format(cryptoData.price * amountOfCrypto.text.toDouble()).toDouble()
                             Text(
-                                text = "${amountOfCrypto.text} ${cryptoData.symbol.uppercase()} = £${roundedAmount}",
+                                text = "${amountOfCrypto.text} ${cryptoData.symbol.uppercase()} = £$roundedAmount",
                                 modifier = Modifier
                                     .align(alignment = Alignment.CenterVertically)
                                     .padding(end = 8.dp)
@@ -130,7 +133,7 @@ fun CryptoTransactionDialog(
                                         .padding(start = 8.dp)
                                 )
                             }
-                            Text(text = "£${cryptoData.price * amountOfCrypto.text.toDouble()}")
+                            Text(text = "£$roundedAmount")
                         }
                     }
                 },
@@ -138,6 +141,14 @@ fun CryptoTransactionDialog(
                     Button(
                         modifier = Modifier.padding(8.dp),
                         onClick = {
+                            cryptoTransactionViewModel.addTransactionRecord(
+                                TransactionRecord(
+                                    cryptoSymbol = cryptoData.symbol.uppercase(),
+                                    cryptoAmount = amountOfCrypto.text.toDouble(),
+                                    amount = "£$roundedAmount",
+                                    transactionType = transactionType
+                                )
+                            )
                             cryptoTransactionDialogOpenState.value = false
                             navController.navigate(Screen.CryptoTransactionConfirmation.route + "/$transactionType")
                         }

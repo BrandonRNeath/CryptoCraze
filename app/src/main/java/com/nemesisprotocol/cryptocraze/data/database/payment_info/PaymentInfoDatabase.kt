@@ -3,7 +3,7 @@ package com.nemesisprotocol.cryptocraze.data.database.payment_info
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.nemesisprotocol.cryptocraze.data.database.CryptoCrazeVisaColourConverters
+import com.nemesisprotocol.cryptocraze.data.database.converters.CryptoCrazeVisaColourConverters
 import com.nemesisprotocol.cryptocraze.domain.payment_info.CryptoCrazeVisaCard
 import com.nemesisprotocol.cryptocraze.domain.payment_info.FiatWalletCard
 

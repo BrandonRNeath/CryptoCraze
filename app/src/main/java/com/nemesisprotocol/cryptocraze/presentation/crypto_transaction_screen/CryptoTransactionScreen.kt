@@ -56,7 +56,8 @@ fun CryptoTransactionScreen(
         amountOfCrypto = amountOfCrypto,
         selectedFiatWallet = selectedFiatWallet,
         selectedCryptoCrazeVisaCard = selectedCryptoCrazeVisaCard,
-        transactionType = transactionType
+        transactionType = transactionType,
+        cryptoTransactionViewModel = cryptoTransactionViewModel
     )
     LazyColumn(
         modifier = Modifier
@@ -114,9 +115,9 @@ fun CryptoTransactionScreen(
                             canParse = false
                         }
                         if (canParse) {
-                            val roundedAmount =  "%.2f".format(cryptoData.price * amountOfCrypto.text.toDouble()).toDouble()
+                            val roundedAmount = "%.2f".format(cryptoData.price * amountOfCrypto.text.toDouble()).toDouble()
                             Text(
-                                text = "${amountOfCrypto.text} ${cryptoData.symbol.uppercase()} = £${roundedAmount}",
+                                text = "${amountOfCrypto.text} ${cryptoData.symbol.uppercase()} = £$roundedAmount",
                                 fontSize = 20.sp,
                                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
                             )
