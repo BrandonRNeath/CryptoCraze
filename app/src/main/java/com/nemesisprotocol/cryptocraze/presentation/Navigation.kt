@@ -25,6 +25,7 @@ import com.nemesisprotocol.cryptocraze.presentation.info_screen.coin_info.CoinIn
 import com.nemesisprotocol.cryptocraze.presentation.login.login_screen.LoginScreen
 import com.nemesisprotocol.cryptocraze.presentation.login.signup_screen.SignUpScreen
 import com.nemesisprotocol.cryptocraze.presentation.messenger.MessengerScreen
+import com.nemesisprotocol.cryptocraze.presentation.portfolio_screen.PortfolioScreen
 import com.nemesisprotocol.cryptocraze.presentation.splash_screen.SplashScreen
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.CryptoCrazeVisaCardAddedScreen
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.PaymentCardAddedScreen
@@ -146,6 +147,10 @@ fun Navigation(
                 navController = navController,
                 transactionType = TransactionType.valueOf(transactionType!!)
             )
+        }
+
+        composable(Screen.Portfolio.route) {
+            PortfolioScreen()
         }
     }
 }
