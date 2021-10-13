@@ -117,11 +117,16 @@ fun SignUp(
                     launch(Dispatchers.Main) {
                         Toast.makeText(context, "User already exists", Toast.LENGTH_SHORT).show()
                     }
-                } else onDone(
-                    username.value.trim(),
-                    password.value.trim(),
-                    confirmedPassword.value.trim()
-                )
+                } else {
+                    onDone(
+                        username.value.trim(),
+                        password.value.trim(),
+                        confirmedPassword.value.trim()
+                    )
+                    launch(Dispatchers.Main) {
+                        navController.navigate(Screen.Login.route)
+                    }
+                }
             }
             keyboardController?.hide()
         }
