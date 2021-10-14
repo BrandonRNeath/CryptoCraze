@@ -6,6 +6,8 @@ import com.nemesisprotocol.cryptocraze.data.database.crypto_fav_data.CryptoFavDa
 import com.nemesisprotocol.cryptocraze.data.database.crypto_fav_data.CryptoFavDataDatabase
 import com.nemesisprotocol.cryptocraze.data.database.payment_info.PaymentInfoDao
 import com.nemesisprotocol.cryptocraze.data.database.payment_info.PaymentInfoDatabase
+import com.nemesisprotocol.cryptocraze.data.database.portfolio.PortfolioDao
+import com.nemesisprotocol.cryptocraze.data.database.portfolio.PortfolioDatabase
 import com.nemesisprotocol.cryptocraze.data.database.transaction_history.TransactionHistoryDao
 import com.nemesisprotocol.cryptocraze.data.database.transaction_history.TransactionHistoryDatabase
 import com.nemesisprotocol.cryptocraze.data.database.user.UserDao
@@ -66,6 +68,20 @@ class DatabaseModule {
             context,
             TransactionHistoryDatabase::class.java,
             "transaction_history_db"
+        ).build()
+    }
+
+    @Provides
+    fun providePortfolioDao(portfolioDatabase: PortfolioDatabase): PortfolioDao =
+        portfolioDatabase.portfolioDao()
+
+    @Provides
+    @Singleton
+    fun providePortfolioDatabase(@ApplicationContext context: Context): PortfolioDatabase {
+        return Room.databaseBuilder(
+            context,
+            PortfolioDatabase::class.java,
+            "portfolio_db"
         ).build()
     }
 }

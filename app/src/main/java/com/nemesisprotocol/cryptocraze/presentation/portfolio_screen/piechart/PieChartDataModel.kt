@@ -21,7 +21,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 
-
 class PieChartDataModel {
     private var colors = mutableListOf(
         Color(0XFFF44336),

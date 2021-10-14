@@ -10,6 +10,7 @@ import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoDataRepo
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoFavDataRepo
 import com.nemesisprotocol.cryptocraze.domain.crypto_info.CoinRepo
 import com.nemesisprotocol.cryptocraze.domain.payment_info.PaymentInfoRepo
+import com.nemesisprotocol.cryptocraze.domain.portfolio.PortfolioRepo
 import com.nemesisprotocol.cryptocraze.domain.transaction_history.TransactionHistoryRepo
 import com.nemesisprotocol.cryptocraze.domain.user.UserRepo
 import dagger.Module
@@ -76,6 +77,11 @@ object AppModule {
     @Singleton
     fun provideTransactionHistoryRepo(transactionHistoryRepoImpl: TransactionHistoryRepoImpl):
         TransactionHistoryRepo = transactionHistoryRepoImpl
+
+    @Provides
+    @Singleton
+    fun providePortfolioRepo(portfolioRepoImpl: PortfolioRepoImpl):
+        PortfolioRepo = portfolioRepoImpl
 
     @Singleton
     @Provides
