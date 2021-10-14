@@ -12,6 +12,10 @@ class PortfolioRepoImpl @Inject constructor(private val portfolioDao: PortfolioD
         return portfolioDao.getPortfolio()
     }
 
+    override fun checkCryptoIsInvested(cryptoSymbol: String): Boolean {
+        return portfolioDao.checkCryptoIsInvested(cryptoSymbol = cryptoSymbol)
+    }
+
     override fun addCryptoInvestment(cryptoInvestment: CryptoInvestment) {
         portfolioDao.addCryptoInvestment(cryptoInvestment = cryptoInvestment)
     }
