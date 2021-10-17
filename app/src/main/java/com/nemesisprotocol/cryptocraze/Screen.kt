@@ -19,4 +19,5 @@ sealed class Screen(val route: String, val icon: Int?, val title: String) {
     object CryptoTransactionConfirmation : Screen("crypto_transaction_confirmation", null, "Crypto Transaction Confirmation")
     object CryptoTransactionFailed : Screen("crypto_transaction_failed", null, "Crypto Transaction Failed")
     object Portfolio : Screen("portfolio_screen", null, "Portfolio")
+    object TransactionHistory : Screen("transaction_history_screen", null, "Transaction History")
 }

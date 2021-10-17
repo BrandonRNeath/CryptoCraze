@@ -13,6 +13,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -20,10 +21,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -54,6 +57,10 @@ class MainActivity : ComponentActivity() {
                 val pagingCryptoDataItems = homeViewModel.getAllCryptos().collectAsLazyPagingItems()
 
                 val navController = rememberNavController()
+
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+
+                val currentRoute = remember { mutableStateOf(navBackStackEntry?.destination?.route ?: Screen.Splash.route) }
 
                 val userLoggedIn = remember { mutableStateOf(false) }
 
@@ -155,7 +162,11 @@ class MainActivity : ComponentActivity() {
                                                             coroutineScope.launch {
                                                                 bottomSheetScaffoldState.bottomSheetState.collapse()
                                                                 navController.navigate(
-                                                                    Screen.CryptoTransaction.route + "/${Gson().toJson(it.mapPriceInfo())}/${TransactionType.BUY.name}"
+                                                                    Screen.CryptoTransaction.route + "/${
+                                                                    Gson().toJson(
+                                                                        it.mapPriceInfo()
+                                                                    )
+                                                                    }/${TransactionType.BUY.name}"
                                                                 )
                                                             }
                                                         }
@@ -258,7 +269,11 @@ class MainActivity : ComponentActivity() {
                                                             coroutineScope.launch {
                                                                 bottomSheetScaffoldState.bottomSheetState.collapse()
                                                                 navController.navigate(
-                                                                    Screen.CryptoTransaction.route + "/${Gson().toJson(it.mapPriceInfo())}/${TransactionType.SELL.name}"
+                                                                    Screen.CryptoTransaction.route + "/${
+                                                                    Gson().toJson(
+                                                                        it.mapPriceInfo()
+                                                                    )
+                                                                    }/${TransactionType.SELL.name}"
                                                                 )
                                                             }
                                                         }
@@ -319,11 +334,21 @@ class MainActivity : ComponentActivity() {
                                 TopAppBar(
                                     title = {
                                     },
-                                    navigationIcon = {
+                                    actions = {
+                                        if (currentRoute.value == Screen.Wallet.route) {
+                                            IconButton(onClick = {
+                                                navController.navigate(Screen.TransactionHistory.route)
+                                            }) {
+                                                Icon(
+                                                    painter = painterResource(id = R.drawable.transaction_history_24),
+                                                    ""
+                                                )
+                                            }
+                                        }
                                         IconButton(onClick = { }) {
                                             Icon(Icons.Rounded.Settings, "")
                                         }
-                                    },
+                                    }
                                 )
                             }
                         },
@@ -334,7 +359,7 @@ class MainActivity : ComponentActivity() {
                         }
                     ) {
                         Box(modifier = Modifier.padding(it)) {
-                            Navigation(navController, userLoggedIn, homeViewModel)
+                            Navigation(navController, userLoggedIn, homeViewModel, currentRoute)
                         }
                     }
                 }
