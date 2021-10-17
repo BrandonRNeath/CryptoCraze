@@ -25,4 +25,18 @@ class CryptoDataRepoImpl @Inject constructor(
             emptyList()
         }
     }
+
+    @WorkerThread
+    override suspend fun getCryptoDataBySymbol(symbol: String): List<CryptoData> {
+        val response = cryptoApi.getCryptoDataBySymbol(symbol)
+        return if (response.isSuccessful && !response.body().isNullOrEmpty()) {
+            val cryptoApiResponseList = response.body()
+            val cryptoList = cryptoApiResponseList?.map { cryptoApiResponse ->
+                cryptoApiMapper.map(cryptoApiResponse)
+            }
+            cryptoList ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
 }

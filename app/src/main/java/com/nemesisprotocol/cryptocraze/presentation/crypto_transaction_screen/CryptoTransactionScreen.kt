@@ -26,6 +26,7 @@ import androidx.navigation.NavHostController
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoDataPriceInfo
 import com.nemesisprotocol.cryptocraze.domain.payment_info.CryptoCrazeVisaCard
 import com.nemesisprotocol.cryptocraze.domain.payment_info.FiatWalletCard
+import com.nemesisprotocol.cryptocraze.presentation.PortfolioViewModel
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletViewModel
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.add_wallet.InputItem
 
@@ -37,6 +38,7 @@ fun CryptoTransactionScreen(
 ) {
     val walletViewModel: WalletViewModel = hiltViewModel()
     val cryptoTransactionViewModel: CryptoTransactionViewModel = hiltViewModel()
+    val portfolioViewModel: PortfolioViewModel = hiltViewModel()
     val cryptoTransactionDialogOpenState = remember { mutableStateOf(false) }
     val paymentCards = walletViewModel.paymentCards.collectAsState()
     val cryptoCrazeVisaCards = walletViewModel.cryptoCrazeVisaCards.collectAsState()
@@ -49,6 +51,7 @@ fun CryptoTransactionScreen(
     val transactionTypeString =
         Character.toUpperCase(transactionType.name[0]) + transactionType.name.lowercase()
             .substring(1)
+    val coroutineScope = rememberCoroutineScope()
     CryptoTransactionDialog(
         cryptoTransactionDialogOpenState = cryptoTransactionDialogOpenState,
         navController = navController,
@@ -57,7 +60,9 @@ fun CryptoTransactionScreen(
         selectedFiatWallet = selectedFiatWallet,
         selectedCryptoCrazeVisaCard = selectedCryptoCrazeVisaCard,
         transactionType = transactionType,
-        cryptoTransactionViewModel = cryptoTransactionViewModel
+        cryptoTransactionViewModel = cryptoTransactionViewModel,
+        portfolioViewModel = portfolioViewModel,
+        coroutineScope = coroutineScope
     )
     LazyColumn(
         modifier = Modifier
@@ -115,7 +120,9 @@ fun CryptoTransactionScreen(
                             canParse = false
                         }
                         if (canParse) {
-                            val roundedAmount = "%.2f".format(cryptoData.price * amountOfCrypto.text.toDouble()).toDouble()
+                            val roundedAmount =
+                                "%.2f".format(cryptoData.price * amountOfCrypto.text.toDouble())
+                                    .toDouble()
                             Text(
                                 text = "${amountOfCrypto.text} ${cryptoData.symbol.uppercase()} = £$roundedAmount",
                                 fontSize = 20.sp,

@@ -32,7 +32,7 @@ class PortfolioViewModel @Inject constructor(
         }
     }
 
-    suspend fun checkCryptoIsInvested(cryptoSymbol: String) {
+    suspend fun checkCryptoIsInvested(cryptoSymbol: String): Boolean {
         return withContext(dispatcherProvider.io) {
             checkCryptoIsInvestedUseCase(cryptoSymbol)
         }

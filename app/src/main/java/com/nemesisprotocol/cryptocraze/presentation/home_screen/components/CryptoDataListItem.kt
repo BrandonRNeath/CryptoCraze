@@ -60,7 +60,7 @@ fun CryptoDataListItem(
                 modifier = Modifier.padding(horizontal = 4.dp)
             )
             Text(
-                text = "$${cryptoData.price}",
+                text = "£${cryptoData.price}",
                 fontStyle = FontStyle.Italic,
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center,

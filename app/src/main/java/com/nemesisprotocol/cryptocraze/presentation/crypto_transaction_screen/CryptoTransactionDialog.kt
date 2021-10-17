@@ -16,7 +16,12 @@ import com.nemesisprotocol.cryptocraze.Screen
 import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoDataPriceInfo
 import com.nemesisprotocol.cryptocraze.domain.payment_info.CryptoCrazeVisaCard
 import com.nemesisprotocol.cryptocraze.domain.payment_info.FiatWalletCard
+import com.nemesisprotocol.cryptocraze.domain.portfolio.CryptoInvestment
 import com.nemesisprotocol.cryptocraze.domain.transaction_history.TransactionRecord
+import com.nemesisprotocol.cryptocraze.presentation.PortfolioViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun CryptoTransactionDialog(
@@ -27,7 +32,9 @@ fun CryptoTransactionDialog(
     selectedFiatWallet: FiatWalletCard?,
     selectedCryptoCrazeVisaCard: CryptoCrazeVisaCard?,
     transactionType: TransactionType,
-    cryptoTransactionViewModel: CryptoTransactionViewModel
+    cryptoTransactionViewModel: CryptoTransactionViewModel,
+    portfolioViewModel: PortfolioViewModel,
+    coroutineScope: CoroutineScope
 ) {
     Column(
         Modifier
@@ -151,6 +158,16 @@ fun CryptoTransactionDialog(
                                             transactionType = transactionType
                                         )
                                     )
+                                    coroutineScope.launch(Dispatchers.IO) {
+                                        if (!portfolioViewModel.checkCryptoIsInvested(cryptoData.symbol.uppercase())) {
+                                            portfolioViewModel.addCryptoInvestment(
+                                                CryptoInvestment(
+                                                    cryptoSymbol = cryptoData.symbol.uppercase(),
+                                                    cryptoAmount = amountOfCrypto.text.toDouble()
+                                                )
+                                            )
+                                        }
+                                    }
                                     cryptoTransactionDialogOpenState.value = false
                                     navController.navigate(Screen.CryptoTransactionConfirmation.route + "/$transactionType")
                                 } else {
@@ -172,6 +189,16 @@ fun CryptoTransactionDialog(
                                             transactionType = transactionType
                                         )
                                     )
+                                    coroutineScope.launch(Dispatchers.IO) {
+                                        if (!portfolioViewModel.checkCryptoIsInvested(cryptoData.symbol.uppercase())) {
+                                            portfolioViewModel.addCryptoInvestment(
+                                                CryptoInvestment(
+                                                    cryptoSymbol = cryptoData.symbol.uppercase(),
+                                                    cryptoAmount = amountOfCrypto.text.toDouble()
+                                                )
+                                            )
+                                        }
+                                    }
                                     cryptoTransactionDialogOpenState.value = false
                                     navController.navigate(Screen.CryptoTransactionConfirmation.route + "/$transactionType")
                                 } else {
@@ -184,7 +211,6 @@ fun CryptoTransactionDialog(
                                     }
                                 }
                             }
-
                         }
                     ) {
                         Text("Confirm")
@@ -200,8 +226,8 @@ fun CryptoTransactionDialog(
                         Text("Cancel")
                     }
                 }, shape = RoundedCornerShape(30.dp)
-            )
+                )
+            }
         }
     }
-}
     
