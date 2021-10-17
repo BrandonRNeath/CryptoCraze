@@ -16,6 +16,7 @@ import javax.inject.Inject
 class PortfolioViewModel @Inject constructor(
     private val addCryptoInvestmentUseCase: AddCryptoInvestmentUseCase,
     private val checkCryptoIsInvestedUseCase: CheckCryptoIsInvestedUseCase,
+    private val getCryptoInvestmentBySymbolUseCase: GetCryptoInvestmentBySymbolUseCase,
     private val deleteCryptoInvestmentUseCase: DeleteCryptoInvestmentUseCase,
     private val getPortfolioUseCase: GetPortfolioUseCase,
     private val updateCryptoInvestmentUseCase: UpdateCryptoInvestmentUseCase,
@@ -35,6 +36,12 @@ class PortfolioViewModel @Inject constructor(
     suspend fun checkCryptoIsInvested(cryptoSymbol: String): Boolean {
         return withContext(dispatcherProvider.io) {
             checkCryptoIsInvestedUseCase(cryptoSymbol)
+        }
+    }
+
+    suspend fun getCryptoInvestmentBySymbol(cryptoSymbol: String): CryptoInvestment {
+        return withContext(dispatcherProvider.io) {
+            getCryptoInvestmentBySymbolUseCase(cryptoSymbol)
         }
     }
 

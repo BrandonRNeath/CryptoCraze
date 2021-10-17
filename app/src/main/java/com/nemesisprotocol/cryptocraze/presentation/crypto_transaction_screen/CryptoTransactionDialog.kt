@@ -176,6 +176,17 @@ fun CryptoTransactionDialog(
                                                     cryptoAmount = amountOfCrypto.text.toDouble()
                                                 )
                                             )
+                                        } else {
+                                            val cryptoInvestment =
+                                                portfolioViewModel.getCryptoInvestmentBySymbol(
+                                                    cryptoData.symbol.uppercase()
+                                                )
+                                            portfolioViewModel.updateCryptoInvestment(
+                                                CryptoInvestment(
+                                                    cryptoSymbol = cryptoData.symbol.uppercase(),
+                                                    cryptoAmount = cryptoInvestment.cryptoAmount + amountOfCrypto.text.toDouble()
+                                                )
+                                            )
                                         }
                                     }
                                     cryptoTransactionDialogOpenState.value = false
@@ -196,7 +207,9 @@ fun CryptoTransactionDialog(
                                         selectedCryptoCrazeVisaCard.balance - roundedAmount,
                                         selectedCryptoCrazeVisaCard.cryptoCrazeVisaColour
                                     )
-                                    walletViewModel.updateCryptoCrazeVisaCard(updatedCryptoCrazeVisaCard)
+                                    walletViewModel.updateCryptoCrazeVisaCard(
+                                        updatedCryptoCrazeVisaCard
+                                    )
                                     cryptoTransactionViewModel.addTransactionRecord(
                                         TransactionRecord(
                                             cryptoSymbol = cryptoData.symbol.uppercase(),
@@ -211,6 +224,17 @@ fun CryptoTransactionDialog(
                                                 CryptoInvestment(
                                                     cryptoSymbol = cryptoData.symbol.uppercase(),
                                                     cryptoAmount = amountOfCrypto.text.toDouble()
+                                                )
+                                            )
+                                        } else {
+                                            val cryptoInvestment =
+                                                portfolioViewModel.getCryptoInvestmentBySymbol(
+                                                    cryptoData.symbol.uppercase()
+                                                )
+                                            portfolioViewModel.updateCryptoInvestment(
+                                                CryptoInvestment(
+                                                    cryptoSymbol = cryptoData.symbol.uppercase(),
+                                                    cryptoAmount = cryptoInvestment.cryptoAmount + amountOfCrypto.text.toDouble()
                                                 )
                                             )
                                         }
@@ -242,8 +266,8 @@ fun CryptoTransactionDialog(
                         Text("Cancel")
                     }
                 }, shape = RoundedCornerShape(30.dp)
-            )
+                )
+            }
         }
     }
-}
     
