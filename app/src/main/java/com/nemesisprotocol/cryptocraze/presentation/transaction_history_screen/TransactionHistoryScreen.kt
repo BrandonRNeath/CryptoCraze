@@ -1,5 +1,7 @@
 package com.nemesisprotocol.cryptocraze.presentation.transaction_history_screen
 
+import android.icu.text.CompactDecimalFormat
+import android.icu.text.CompactDecimalFormat.CompactStyle
 import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -21,26 +23,27 @@ fun TransactionHistoryScreen() {
     val cryptoTransactionViewModel: CryptoTransactionViewModel = hiltViewModel()
     val transactionHistory = cryptoTransactionViewModel.transactionHistory.collectAsState()
     val columnWeight1 = .20f
-    val columnWeight2 = .40f
+    val columnWeight2 = .25f
+    val columnWeight3 = .40f
     val pattern = "dd-MM-yyyy"
     val simpleDateFormat = SimpleDateFormat(pattern, Locale.ENGLISH)
-
+    val cdfShort: CompactDecimalFormat = CompactDecimalFormat.getInstance(Locale.UK, CompactStyle.SHORT)
     LazyColumn(Modifier.fillMaxSize()) {
         item {
             Row(Modifier.background(Color.Gray)) {
                 TableCell(text = "Symbol", weight = columnWeight1)
-                TableCell(text = "Crypto Amount", weight = columnWeight1)
-                TableCell(text = "Amount", weight = columnWeight2)
-                TableCell(text = "Date", weight = columnWeight2)
+                TableCell(text = "Quantity", weight = columnWeight2)
+                TableCell(text = "Amount", weight = columnWeight3)
+                TableCell(text = "Date", weight = columnWeight3)
                 TableCell(text = "Type", weight = columnWeight1)
             }
         }
         items(transactionHistory.value) {
             Row(Modifier.fillMaxWidth()) {
                 TableCell(text = it.cryptoSymbol, weight = columnWeight1)
-                TableCell(text = it.cryptoAmount.toString(), weight = columnWeight1)
-                TableCell(text = it.amount, weight = columnWeight2)
-                TableCell(text = simpleDateFormat.format(it.timestamp), weight = columnWeight2)
+                TableCell(text = cdfShort.format(it.cryptoAmount), weight = columnWeight2)
+                TableCell(text = cdfShort.format(it.amount.substring(1).toDouble()) , weight = columnWeight3)
+                TableCell(text = simpleDateFormat.format(it.timestamp), weight = columnWeight3)
                 TableCell(text = it.transactionType.toString(), weight = columnWeight1)
             }
         }
