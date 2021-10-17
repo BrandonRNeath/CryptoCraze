@@ -42,7 +42,7 @@ fun TransactionHistoryScreen() {
             Row(Modifier.fillMaxWidth()) {
                 TableCell(text = it.cryptoSymbol, weight = columnWeight1)
                 TableCell(text = cdfShort.format(it.cryptoAmount), weight = columnWeight2)
-                TableCell(text = cdfShort.format(it.amount.substring(1).toDouble()) , weight = columnWeight3)
+                TableCell(text = "£${cdfShort.format(it.amount.substring(1).toDouble())}" , weight = columnWeight3)
                 TableCell(text = simpleDateFormat.format(it.timestamp), weight = columnWeight3)
                 TableCell(text = it.transactionType.toString(), weight = columnWeight1)
             }
