@@ -17,6 +17,9 @@ interface PaymentInfoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addFiatWallet(fiatWalletCard: FiatWalletCard)
 
+    @Update
+    fun updateFiatWallet(fiatWalletCard: FiatWalletCard)
+
     @Delete
     fun deleteFiatWallet(fiatWalletCard: FiatWalletCard)
 
@@ -28,6 +31,9 @@ interface PaymentInfoDao {
 
     @Insert
     fun addCryptoCrazeVisaCard(cryptoCrazeVisaCard: CryptoCrazeVisaCard)
+
+    @Update
+    fun updateCryptoCrazeVisaCard(cryptoCrazeVisaCard: CryptoCrazeVisaCard)
 
     @Delete
     fun deleteCryptoCrazeVisaCard(cryptoCrazeVisaCard: CryptoCrazeVisaCard)

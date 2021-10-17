@@ -17,6 +17,8 @@ import javax.inject.Inject
 class WalletViewModel @Inject constructor(
     private val addCryptoCrazeVisaCardUseCase: AddCryptoCrazeVisaCardUseCase,
     private val addFiatWalletUseCase: AddFiatWalletUseCase,
+    private val updateFiatWalletUseCase: UpdateFiatWalletUseCase,
+    private val updateCryptoCrazeVisaCardUseCase: UpdateCryptoCrazeVisaCardUseCase,
     private val deleteCryptoCrazeVisaCardUseCase: DeleteCryptoCrazeVisaCardUseCase,
     private val deleteFiatWalletUseCase: DeleteFiatWalletUseCase,
     private val getCryptoCrazeVisaCardsUseCase: GetCryptoCrazeVisaCardsUseCase,
@@ -60,6 +62,18 @@ class WalletViewModel @Inject constructor(
     fun addFiatWallet(fiatWalletCard: FiatWalletCard) {
         viewModelScope.launch(dispatcherProvider.io) {
             addFiatWalletUseCase(fiatWalletCard)
+        }
+    }
+
+    fun updateFiatWallet(fiatWalletCard: FiatWalletCard) {
+        viewModelScope.launch(dispatcherProvider.io) {
+            updateFiatWalletUseCase(fiatWalletCard)
+        }
+    }
+
+    fun updateCryptoCrazeVisaCard(cryptoCrazeVisaCard: CryptoCrazeVisaCard) {
+        viewModelScope.launch(dispatcherProvider.io) {
+            updateCryptoCrazeVisaCardUseCase(cryptoCrazeVisaCard)
         }
     }
 

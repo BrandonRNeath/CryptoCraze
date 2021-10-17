@@ -19,6 +19,7 @@ import com.nemesisprotocol.cryptocraze.domain.payment_info.FiatWalletCard
 import com.nemesisprotocol.cryptocraze.domain.portfolio.CryptoInvestment
 import com.nemesisprotocol.cryptocraze.domain.transaction_history.TransactionRecord
 import com.nemesisprotocol.cryptocraze.presentation.PortfolioViewModel
+import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,6 +35,7 @@ fun CryptoTransactionDialog(
     transactionType: TransactionType,
     cryptoTransactionViewModel: CryptoTransactionViewModel,
     portfolioViewModel: PortfolioViewModel,
+    walletViewModel: WalletViewModel,
     coroutineScope: CoroutineScope
 ) {
     Column(
@@ -150,6 +152,14 @@ fun CryptoTransactionDialog(
                         onClick = {
                             if (selectedFiatWallet != null) {
                                 if (selectedFiatWallet.balance > roundedAmount && transactionType == TransactionType.BUY) {
+                                    val updatedFiatWallet = FiatWalletCard(
+                                        selectedFiatWallet.cardNumber,
+                                        selectedFiatWallet.cardName,
+                                        selectedFiatWallet.expiryNumber,
+                                        selectedFiatWallet.cvvNumber,
+                                        selectedFiatWallet.balance - roundedAmount
+                                    )
+                                    walletViewModel.updateFiatWallet(updatedFiatWallet)
                                     cryptoTransactionViewModel.addTransactionRecord(
                                         TransactionRecord(
                                             cryptoSymbol = cryptoData.symbol.uppercase(),
@@ -181,6 +191,12 @@ fun CryptoTransactionDialog(
                                 }
                             } else {
                                 if (selectedCryptoCrazeVisaCard!!.balance > roundedAmount && transactionType == TransactionType.BUY) {
+                                    val updatedCryptoCrazeVisaCard = CryptoCrazeVisaCard(
+                                        selectedCryptoCrazeVisaCard.cardId,
+                                        selectedCryptoCrazeVisaCard.balance - roundedAmount,
+                                        selectedCryptoCrazeVisaCard.cryptoCrazeVisaColour
+                                    )
+                                    walletViewModel.updateCryptoCrazeVisaCard(updatedCryptoCrazeVisaCard)
                                     cryptoTransactionViewModel.addTransactionRecord(
                                         TransactionRecord(
                                             cryptoSymbol = cryptoData.symbol.uppercase(),
@@ -226,8 +242,8 @@ fun CryptoTransactionDialog(
                         Text("Cancel")
                     }
                 }, shape = RoundedCornerShape(30.dp)
-                )
-            }
+            )
         }
     }
+}
     

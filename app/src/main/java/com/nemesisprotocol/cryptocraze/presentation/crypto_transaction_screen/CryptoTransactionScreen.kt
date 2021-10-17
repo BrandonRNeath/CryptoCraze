@@ -62,6 +62,7 @@ fun CryptoTransactionScreen(
         transactionType = transactionType,
         cryptoTransactionViewModel = cryptoTransactionViewModel,
         portfolioViewModel = portfolioViewModel,
+        walletViewModel = walletViewModel,
         coroutineScope = coroutineScope
     )
     LazyColumn(
