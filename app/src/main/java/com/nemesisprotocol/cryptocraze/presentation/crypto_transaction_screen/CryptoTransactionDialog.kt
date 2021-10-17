@@ -141,16 +141,50 @@ fun CryptoTransactionDialog(
                     Button(
                         modifier = Modifier.padding(8.dp),
                         onClick = {
-                            cryptoTransactionViewModel.addTransactionRecord(
-                                TransactionRecord(
-                                    cryptoSymbol = cryptoData.symbol.uppercase(),
-                                    cryptoAmount = amountOfCrypto.text.toDouble(),
-                                    amount = "£$roundedAmount",
-                                    transactionType = transactionType
-                                )
-                            )
-                            cryptoTransactionDialogOpenState.value = false
-                            navController.navigate(Screen.CryptoTransactionConfirmation.route + "/$transactionType")
+                            if (selectedFiatWallet != null) {
+                                if (selectedFiatWallet.balance > roundedAmount && transactionType == TransactionType.BUY) {
+                                    cryptoTransactionViewModel.addTransactionRecord(
+                                        TransactionRecord(
+                                            cryptoSymbol = cryptoData.symbol.uppercase(),
+                                            cryptoAmount = amountOfCrypto.text.toDouble(),
+                                            amount = "£$roundedAmount",
+                                            transactionType = transactionType
+                                        )
+                                    )
+                                    cryptoTransactionDialogOpenState.value = false
+                                    navController.navigate(Screen.CryptoTransactionConfirmation.route + "/$transactionType")
+                                } else {
+                                    if (transactionType == TransactionType.BUY) {
+                                        cryptoTransactionDialogOpenState.value = false
+                                        navController.navigate(Screen.CryptoTransactionFailed.route + "/$transactionType")
+                                    } else {
+                                        cryptoTransactionDialogOpenState.value = false
+                                        navController.navigate(Screen.CryptoTransactionConfirmation.route + "/$transactionType")
+                                    }
+                                }
+                            } else {
+                                if (selectedCryptoCrazeVisaCard!!.balance > roundedAmount && transactionType == TransactionType.BUY) {
+                                    cryptoTransactionViewModel.addTransactionRecord(
+                                        TransactionRecord(
+                                            cryptoSymbol = cryptoData.symbol.uppercase(),
+                                            cryptoAmount = amountOfCrypto.text.toDouble(),
+                                            amount = "£$roundedAmount",
+                                            transactionType = transactionType
+                                        )
+                                    )
+                                    cryptoTransactionDialogOpenState.value = false
+                                    navController.navigate(Screen.CryptoTransactionConfirmation.route + "/$transactionType")
+                                } else {
+                                    if (transactionType == TransactionType.BUY) {
+                                        cryptoTransactionDialogOpenState.value = false
+                                        navController.navigate(Screen.CryptoTransactionFailed.route + "/$transactionType")
+                                    } else {
+                                        cryptoTransactionDialogOpenState.value = false
+                                        navController.navigate(Screen.CryptoTransactionConfirmation.route + "/$transactionType")
+                                    }
+                                }
+                            }
+
                         }
                     ) {
                         Text("Confirm")
@@ -166,8 +200,8 @@ fun CryptoTransactionDialog(
                         Text("Cancel")
                     }
                 }, shape = RoundedCornerShape(30.dp)
-                )
-            }
+            )
         }
     }
+}
     
