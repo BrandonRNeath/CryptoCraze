@@ -20,6 +20,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import coil.annotation.ExperimentalCoilApi
+import com.nemesisprotocol.cryptocraze.extensions.roundToTwoDecimals
 import com.nemesisprotocol.cryptocraze.presentation.PortfolioViewModel
 import com.nemesisprotocol.cryptocraze.presentation.home_screen.components.CryptoDataListItem
 import kotlinx.coroutines.Dispatchers
@@ -64,7 +65,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
             fontSize = 18.sp
         )
         Text(
-            text = if (portfolio.value.isEmpty()) "£0.00 GBP" else "£${portfolioCurrentValue.value} GBP",
+            text = if (portfolio.value.isEmpty()) "£0.00 GBP" else "£${portfolioCurrentValue.value.roundToTwoDecimals()} GBP",
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp),
