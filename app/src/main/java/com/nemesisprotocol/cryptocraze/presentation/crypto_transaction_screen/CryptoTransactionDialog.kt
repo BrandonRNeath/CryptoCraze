@@ -201,7 +201,7 @@ fun CryptoTransactionDialog(
                                     }
                                 }
                             } else {
-                                if (selectedCryptoCrazeVisaCard!!.balance > roundedAmount) {
+                                if (selectedCryptoCrazeVisaCard!!.balance > roundedAmount || transactionType == TransactionType.SELL) {
                                     val updatedCryptoCrazeVisaCard = CryptoCrazeVisaCard(
                                         selectedCryptoCrazeVisaCard.cardId,
                                         if (transactionType == TransactionType.BUY) selectedCryptoCrazeVisaCard.balance - roundedAmount else selectedCryptoCrazeVisaCard.balance + roundedAmount,
