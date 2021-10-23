@@ -42,16 +42,18 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
     val portfolioValueIncrease = remember { mutableStateOf(0.0) }
     val portfolioValuePercentage = remember { mutableStateOf(0.0) }
 
-    LaunchedEffect(Dispatchers.IO) {
-        var currentValue = 0.0
-        for (portfolioValue in portfolio.value) {
-            val cryptoData =
-                homeViewModel.getCryptoBySymbol(portfolioValue.cryptoSymbol.lowercase())
-            currentValue += portfolioValue.cryptoAmount * cryptoData[0].price
-            portfolioValueIncrease.value += cryptoData[0].dailyChange
-            portfolioValuePercentage.value += cryptoData[0].dailyChangePercentage
+    if (portfolio.value.isNotEmpty()) {
+        LaunchedEffect(Dispatchers.IO) {
+            var currentValue = 0.0
+            for (portfolioValue in portfolio.value) {
+                val cryptoData =
+                    homeViewModel.getCryptoBySymbol(portfolioValue.cryptoSymbol.lowercase())
+                currentValue += portfolioValue.cryptoAmount * cryptoData[0].price
+                portfolioValueIncrease.value += cryptoData[0].dailyChange
+                portfolioValuePercentage.value += cryptoData[0].dailyChangePercentage
+            }
+            portfolioCurrentValue.value += currentValue
         }
-        portfolioCurrentValue.value += currentValue
     }
 
     val dailyChangeSymbol = if (portfolioValueIncrease.value > 0) "+" else "-"

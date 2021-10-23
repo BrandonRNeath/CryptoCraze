@@ -151,13 +151,13 @@ fun CryptoTransactionDialog(
                         modifier = Modifier.padding(8.dp),
                         onClick = {
                             if (selectedFiatWallet != null) {
-                                if (selectedFiatWallet.balance > roundedAmount && transactionType == TransactionType.BUY) {
+                                if (selectedFiatWallet.balance > roundedAmount || transactionType == TransactionType.SELL) {
                                     val updatedFiatWallet = FiatWalletCard(
                                         selectedFiatWallet.cardNumber,
                                         selectedFiatWallet.cardName,
                                         selectedFiatWallet.expiryNumber,
                                         selectedFiatWallet.cvvNumber,
-                                        selectedFiatWallet.balance - roundedAmount
+                                        if (transactionType == TransactionType.BUY) selectedFiatWallet.balance - roundedAmount else selectedFiatWallet.balance + roundedAmount
                                     )
                                     walletViewModel.updateFiatWallet(updatedFiatWallet)
                                     cryptoTransactionViewModel.addTransactionRecord(
@@ -184,7 +184,7 @@ fun CryptoTransactionDialog(
                                             portfolioViewModel.updateCryptoInvestment(
                                                 CryptoInvestment(
                                                     cryptoSymbol = cryptoData.symbol.uppercase(),
-                                                    cryptoAmount = cryptoInvestment.cryptoAmount + amountOfCrypto.text.toDouble()
+                                                    cryptoAmount = if (transactionType == TransactionType.BUY) cryptoInvestment.cryptoAmount + amountOfCrypto.text.toDouble() else cryptoInvestment.cryptoAmount - amountOfCrypto.text.toDouble()
                                                 )
                                             )
                                         }
@@ -201,10 +201,10 @@ fun CryptoTransactionDialog(
                                     }
                                 }
                             } else {
-                                if (selectedCryptoCrazeVisaCard!!.balance > roundedAmount && transactionType == TransactionType.BUY) {
+                                if (selectedCryptoCrazeVisaCard!!.balance > roundedAmount) {
                                     val updatedCryptoCrazeVisaCard = CryptoCrazeVisaCard(
                                         selectedCryptoCrazeVisaCard.cardId,
-                                        selectedCryptoCrazeVisaCard.balance - roundedAmount,
+                                        if (transactionType == TransactionType.BUY) selectedCryptoCrazeVisaCard.balance - roundedAmount else selectedCryptoCrazeVisaCard.balance + roundedAmount,
                                         selectedCryptoCrazeVisaCard.cryptoCrazeVisaColour
                                     )
                                     walletViewModel.updateCryptoCrazeVisaCard(
@@ -219,7 +219,7 @@ fun CryptoTransactionDialog(
                                         )
                                     )
                                     coroutineScope.launch(Dispatchers.IO) {
-                                        if (!portfolioViewModel.checkCryptoIsInvested(cryptoData.symbol.uppercase())) {
+                                        if (!portfolioViewModel.checkCryptoIsInvested(cryptoData.symbol.uppercase()) && transactionType == TransactionType.BUY) {
                                             portfolioViewModel.addCryptoInvestment(
                                                 CryptoInvestment(
                                                     cryptoSymbol = cryptoData.symbol.uppercase(),
@@ -234,7 +234,7 @@ fun CryptoTransactionDialog(
                                             portfolioViewModel.updateCryptoInvestment(
                                                 CryptoInvestment(
                                                     cryptoSymbol = cryptoData.symbol.uppercase(),
-                                                    cryptoAmount = cryptoInvestment.cryptoAmount + amountOfCrypto.text.toDouble()
+                                                    cryptoAmount = if (transactionType == TransactionType.BUY) cryptoInvestment.cryptoAmount + amountOfCrypto.text.toDouble() else cryptoInvestment.cryptoAmount - amountOfCrypto.text.toDouble()
                                                 )
                                             )
                                         }
@@ -266,8 +266,8 @@ fun CryptoTransactionDialog(
                         Text("Cancel")
                     }
                 }, shape = RoundedCornerShape(30.dp)
-                )
-            }
+            )
         }
     }
+}
     
