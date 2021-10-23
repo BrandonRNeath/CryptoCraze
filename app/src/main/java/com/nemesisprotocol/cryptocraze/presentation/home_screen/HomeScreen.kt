@@ -39,15 +39,22 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
     val coroutineScope = rememberCoroutineScope()
     val portfolio = portfolioViewModel.portfolio.collectAsState()
     val portfolioCurrentValue = remember { mutableStateOf(0.0) }
+    val portfolioValueIncrease = remember { mutableStateOf(0.0) }
+    val portfolioValuePercentage = remember { mutableStateOf(0.0) }
 
     LaunchedEffect(Dispatchers.IO) {
         var currentValue = 0.0
         for (portfolioValue in portfolio.value) {
-            val cryptoData = homeViewModel.getCryptoBySymbol(portfolioValue.cryptoSymbol.lowercase())
+            val cryptoData =
+                homeViewModel.getCryptoBySymbol(portfolioValue.cryptoSymbol.lowercase())
             currentValue += portfolioValue.cryptoAmount * cryptoData[0].price
+            portfolioValueIncrease.value += cryptoData[0].dailyChange
+            portfolioValuePercentage.value += cryptoData[0].dailyChangePercentage
         }
         portfolioCurrentValue.value += currentValue
     }
+
+    val dailyChangeSymbol = if (portfolioValueIncrease.value > 0) "+" else "-"
 
     Column(
         modifier = Modifier
@@ -74,12 +81,12 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
             fontSize = 24.sp
         )
         Text(
-            text = "+1.25% | +£1,501.12",
+            text = "${dailyChangeSymbol}${portfolioValuePercentage.value.roundToTwoDecimals()}% | ${dailyChangeSymbol}£${portfolioValueIncrease.value.roundToTwoDecimals()}",
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp),
             textAlign = TextAlign.Center,
-            color = Color.Green,
+            color = if (dailyChangeSymbol == "+") Color.Green else Color.Red,
             fontWeight = Bold,
             fontSize = 14.sp
         )
