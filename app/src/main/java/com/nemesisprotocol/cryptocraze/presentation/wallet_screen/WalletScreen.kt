@@ -2,19 +2,16 @@ package com.nemesisprotocol.cryptocraze.presentation.wallet_screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.nemesisprotocol.cryptocraze.R
 import com.nemesisprotocol.cryptocraze.Screen
@@ -31,36 +28,8 @@ fun WalletScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .fillMaxWidth()
+            .padding(top = 16.dp)
     ) {
-        Text(
-            text = "Account Balance",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 32.dp),
-            textAlign = TextAlign.Center,
-            color = Color.Gray,
-            fontStyle = FontStyle.Italic,
-            fontSize = 18.sp
-        )
-        Text(
-            text = "£61,740.84 GBP",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp
-        )
-        Text(
-            text = "+1.25% | +£1,501.12",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-            textAlign = TextAlign.Center,
-            color = Color.Green,
-            fontWeight = FontWeight.Bold,
-            fontSize = 14.sp
-        )
         Card(
             modifier = Modifier
                 .fillMaxWidth()
