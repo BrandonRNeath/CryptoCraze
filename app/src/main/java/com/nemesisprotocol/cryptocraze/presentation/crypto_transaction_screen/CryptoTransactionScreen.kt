@@ -29,6 +29,7 @@ import com.nemesisprotocol.cryptocraze.domain.payment_info.FiatWalletCard
 import com.nemesisprotocol.cryptocraze.presentation.PortfolioViewModel
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.WalletViewModel
 import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.add_wallet.InputItem
+import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun CryptoTransactionScreen(
@@ -52,6 +53,18 @@ fun CryptoTransactionScreen(
         Character.toUpperCase(transactionType.name[0]) + transactionType.name.lowercase()
             .substring(1)
     val coroutineScope = rememberCoroutineScope()
+    val cryptoInvestmentAmount = remember { mutableStateOf(0.00) }
+
+    if (transactionType == TransactionType.SELL) {
+        LaunchedEffect(Dispatchers.IO) {
+            if (portfolioViewModel.checkCryptoIsInvested(cryptoData.symbol.uppercase())) {
+                val cryptoInvestment =
+                    portfolioViewModel.getCryptoInvestmentBySymbol(cryptoData.symbol.uppercase())
+                cryptoInvestmentAmount.value = cryptoInvestment.cryptoAmount
+            }
+        }
+    }
+
     CryptoTransactionDialog(
         cryptoTransactionDialogOpenState = cryptoTransactionDialogOpenState,
         navController = navController,
@@ -261,7 +274,7 @@ fun CryptoTransactionScreen(
                     onClick = {
                         cryptoTransactionDialogOpenState.value = true
                     },
-                    enabled = canPerformTransaction.value && amountOfCrypto.text.isNotEmpty(),
+                    enabled = canPerformTransaction.value && amountOfCrypto.text.isNotEmpty() && transactionType == TransactionType.BUY || canParseToDouble(amountOfCrypto.text) && cryptoInvestmentAmount.value >= amountOfCrypto.text.toDouble() && transactionType == TransactionType.SELL,
                     modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
                 ) {
                     if (amountOfCrypto.text.isNotEmpty()) Text(
@@ -275,5 +288,14 @@ fun CryptoTransactionScreen(
                 }
             }
         }
+    }
+}
+
+fun canParseToDouble(amountOfText: String): Boolean {
+    return try {
+        amountOfText.toDouble()
+        true
+    } catch (numberFormatException: NumberFormatException) {
+        false
     }
 }
