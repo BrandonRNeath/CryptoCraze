@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                 val homeViewModel: HomeViewModel = hiltViewModel()
                 val portfolioViewModel: PortfolioViewModel = hiltViewModel()
                 val pagingCryptoDataItems = homeViewModel.getAllCryptos().collectAsLazyPagingItems()
-                val portfolio = portfolioViewModel.portfolio.collectAsState()
+                // val portfolio = portfolioViewModel.portfolio.collectAsState()
                 val navController = rememberNavController()
 
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -169,9 +169,9 @@ class MainActivity : ComponentActivity() {
                                                                 bottomSheetScaffoldState.bottomSheetState.collapse()
                                                                 navController.navigate(
                                                                     Screen.CryptoTransaction.route + "/${
-                                                                    Gson().toJson(
-                                                                        it.mapPriceInfo()
-                                                                    )
+                                                                        Gson().toJson(
+                                                                            it.mapPriceInfo()
+                                                                        )
                                                                     }/${TransactionType.BUY.name}"
                                                                 )
                                                             }
@@ -263,8 +263,10 @@ class MainActivity : ComponentActivity() {
                                     LazyColumn(state = listScrollState) {
                                         itemsIndexed(pagingCryptoDataItems) { _, crypto ->
                                             crypto?.let {
-                                                val cryptoIsInvested =
-                                                    portfolio.value.any { it.cryptoSymbol.uppercase() == crypto.symbol.uppercase() }
+                                                var cryptoIsInvested by remember { mutableStateOf(false) }
+                                                LaunchedEffect(Unit) {
+                                                    cryptoIsInvested = portfolioViewModel.checkCryptoIsInvested(crypto.symbol.uppercase())
+                                                }
                                                 Card(
                                                     backgroundColor = if (cryptoIsInvested) MaterialTheme.colors.surface.copy(
                                                         alpha = 0.5f
@@ -285,9 +287,9 @@ class MainActivity : ComponentActivity() {
                                                                 bottomSheetScaffoldState.bottomSheetState.collapse()
                                                                 navController.navigate(
                                                                     Screen.CryptoTransaction.route + "/${
-                                                                    Gson().toJson(
-                                                                        it.mapPriceInfo()
-                                                                    )
+                                                                        Gson().toJson(
+                                                                            it.mapPriceInfo()
+                                                                        )
                                                                     }/${TransactionType.SELL.name}"
                                                                 )
                                                             }
@@ -376,7 +378,12 @@ class MainActivity : ComponentActivity() {
                         }
                     ) {
                         Box(modifier = Modifier.padding(it)) {
-                            Navigation(navController, userLoggedIn, homeViewModel, currentRoute)
+                            Navigation(
+                                navController,
+                                userLoggedIn,
+                                homeViewModel,
+                                currentRoute
+                            )
                         }
                     }
                 }
