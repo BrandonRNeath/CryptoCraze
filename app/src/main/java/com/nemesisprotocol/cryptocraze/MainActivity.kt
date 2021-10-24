@@ -54,7 +54,6 @@ class MainActivity : ComponentActivity() {
                 val homeViewModel: HomeViewModel = hiltViewModel()
                 val portfolioViewModel: PortfolioViewModel = hiltViewModel()
                 val pagingCryptoDataItems = homeViewModel.getAllCryptos().collectAsLazyPagingItems()
-                // val portfolio = portfolioViewModel.portfolio.collectAsState()
                 val navController = rememberNavController()
 
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
