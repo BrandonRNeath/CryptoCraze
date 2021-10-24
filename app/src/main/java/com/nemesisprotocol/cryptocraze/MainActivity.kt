@@ -13,10 +13,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.rounded.Settings
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -36,6 +33,7 @@ import com.google.gson.Gson
 import com.nemesisprotocol.cryptocraze.presentation.BottomNavigationBar
 import com.nemesisprotocol.cryptocraze.presentation.BottomSheetContent
 import com.nemesisprotocol.cryptocraze.presentation.Navigation
+import com.nemesisprotocol.cryptocraze.presentation.PortfolioViewModel
 import com.nemesisprotocol.cryptocraze.presentation.crypto_transaction_screen.TransactionType
 import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeViewModel
 import com.nemesisprotocol.cryptocraze.presentation.ui.theme.CryptoCrazeTheme
@@ -54,13 +52,18 @@ class MainActivity : ComponentActivity() {
             CryptoCrazeTheme {
 
                 val homeViewModel: HomeViewModel = hiltViewModel()
+                val portfolioViewModel: PortfolioViewModel = hiltViewModel()
                 val pagingCryptoDataItems = homeViewModel.getAllCryptos().collectAsLazyPagingItems()
-
+                val portfolio = portfolioViewModel.portfolio.collectAsState()
                 val navController = rememberNavController()
 
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
 
-                val currentRoute = remember { mutableStateOf(navBackStackEntry?.destination?.route ?: Screen.Splash.route) }
+                val currentRoute = remember {
+                    mutableStateOf(
+                        navBackStackEntry?.destination?.route ?: Screen.Splash.route
+                    )
+                }
 
                 val userLoggedIn = remember { mutableStateOf(false) }
 
@@ -149,6 +152,9 @@ class MainActivity : ComponentActivity() {
                                         itemsIndexed(pagingCryptoDataItems) { _, crypto ->
                                             crypto?.let {
                                                 Card(
+                                                    backgroundColor = MaterialTheme.colors.surface.copy(
+                                                        alpha = 0.5f
+                                                    ),
                                                     modifier = Modifier
                                                         .fillMaxWidth()
                                                         .fillMaxHeight()
@@ -176,6 +182,7 @@ class MainActivity : ComponentActivity() {
                                                         verticalArrangement = Arrangement.Center,
                                                     ) {
                                                         Text(
+                                                            modifier = Modifier.padding(start = 8.dp),
                                                             text = "(${it.symbol.uppercase()}) ${it.name}",
                                                             fontSize = 18.sp
                                                         )
@@ -220,6 +227,7 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         if (bottomSheetContent.value == BottomSheetContent.SELL) {
+
                             Box(
                                 Modifier
                                     .fillMaxWidth()
@@ -255,7 +263,14 @@ class MainActivity : ComponentActivity() {
                                     LazyColumn(state = listScrollState) {
                                         itemsIndexed(pagingCryptoDataItems) { _, crypto ->
                                             crypto?.let {
+                                                val cryptoIsInvested =
+                                                    portfolio.value.any { it.cryptoSymbol.uppercase() == crypto.symbol.uppercase() }
                                                 Card(
+                                                    backgroundColor = if (cryptoIsInvested) MaterialTheme.colors.surface.copy(
+                                                        alpha = 0.5f
+                                                    ) else MaterialTheme.colors.surface.copy(
+                                                        alpha = 1.0f
+                                                    ),
                                                     modifier = Modifier
                                                         .fillMaxWidth()
                                                         .fillMaxHeight()
@@ -265,7 +280,7 @@ class MainActivity : ComponentActivity() {
                                                             end = 8.dp,
                                                             top = 16.dp
                                                         )
-                                                        .clickable {
+                                                        .clickable(cryptoIsInvested) {
                                                             coroutineScope.launch {
                                                                 bottomSheetScaffoldState.bottomSheetState.collapse()
                                                                 navController.navigate(
@@ -283,6 +298,8 @@ class MainActivity : ComponentActivity() {
                                                         verticalArrangement = Arrangement.Center,
                                                     ) {
                                                         Text(
+                                                            modifier = Modifier.padding(start = 8.dp),
+                                                            color = if (cryptoIsInvested) Color.Unspecified else Color.Gray,
                                                             text = "(${it.symbol.uppercase()}) ${it.name}",
                                                             fontSize = 18.sp
                                                         )

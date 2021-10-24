@@ -82,6 +82,6 @@ class DatabaseModule {
             context,
             PortfolioDatabase::class.java,
             "portfolio_db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 }

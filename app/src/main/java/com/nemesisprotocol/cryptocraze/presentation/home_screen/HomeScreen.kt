@@ -45,18 +45,24 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
     if (portfolio.value.isNotEmpty()) {
         LaunchedEffect(Dispatchers.IO) {
             var currentValue = 0.0
+            var dailyChangeAmount = 0.0
+            var dailyChangePercentageAmount = 0.0
             for (portfolioValue in portfolio.value) {
                 val cryptoData =
                     homeViewModel.getCryptoBySymbol(portfolioValue.cryptoSymbol.lowercase())
-                currentValue += portfolioValue.cryptoAmount * cryptoData[0].price
-                portfolioValueIncrease.value += cryptoData[0].dailyChange
-                portfolioValuePercentage.value += cryptoData[0].dailyChangePercentage
+                if (cryptoData.isNotEmpty()) {
+                    currentValue += portfolioValue.cryptoAmount * cryptoData[0].price
+                    dailyChangeAmount += cryptoData[0].dailyChange
+                    dailyChangePercentageAmount += cryptoData[0].dailyChangePercentage
+                }
             }
             portfolioCurrentValue.value += currentValue
+            portfolioValueIncrease.value += dailyChangeAmount
+            portfolioValuePercentage.value += dailyChangePercentageAmount
         }
     }
 
-    val dailyChangeSymbol = if (portfolioValueIncrease.value > 0) "+" else "-"
+    val dailyChangeSymbol = if (portfolioValueIncrease.value > 0) "+" else ""
 
     Column(
         modifier = Modifier
@@ -83,7 +89,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
             fontSize = 24.sp
         )
         Text(
-            text = "${dailyChangeSymbol}${portfolioValuePercentage.value.roundToTwoDecimals()}% | ${dailyChangeSymbol}£${portfolioValueIncrease.value.roundToTwoDecimals()}",
+            text = "${dailyChangeSymbol}${portfolioValuePercentage.value.roundToTwoDecimals()}% | $dailyChangeSymbol£${portfolioValueIncrease.value.roundToTwoDecimals()}",
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp),

@@ -173,6 +173,7 @@ fun CryptoTransactionDialog(
                                             portfolioViewModel.addCryptoInvestment(
                                                 CryptoInvestment(
                                                     cryptoSymbol = cryptoData.symbol.uppercase(),
+                                                    cryptoName = cryptoData.name,
                                                     cryptoAmount = amountOfCrypto.text.toDouble()
                                                 )
                                             )
@@ -184,6 +185,7 @@ fun CryptoTransactionDialog(
                                             portfolioViewModel.updateCryptoInvestment(
                                                 CryptoInvestment(
                                                     cryptoSymbol = cryptoData.symbol.uppercase(),
+                                                    cryptoName = cryptoData.name,
                                                     cryptoAmount = if (transactionType == TransactionType.BUY) cryptoInvestment.cryptoAmount + amountOfCrypto.text.toDouble() else cryptoInvestment.cryptoAmount - amountOfCrypto.text.toDouble()
                                                 )
                                             )
@@ -223,6 +225,7 @@ fun CryptoTransactionDialog(
                                             portfolioViewModel.addCryptoInvestment(
                                                 CryptoInvestment(
                                                     cryptoSymbol = cryptoData.symbol.uppercase(),
+                                                    cryptoName = cryptoData.name,
                                                     cryptoAmount = amountOfCrypto.text.toDouble()
                                                 )
                                             )
@@ -234,6 +237,7 @@ fun CryptoTransactionDialog(
                                             portfolioViewModel.updateCryptoInvestment(
                                                 CryptoInvestment(
                                                     cryptoSymbol = cryptoData.symbol.uppercase(),
+                                                    cryptoName = cryptoData.name,
                                                     cryptoAmount = if (transactionType == TransactionType.BUY) cryptoInvestment.cryptoAmount + amountOfCrypto.text.toDouble() else cryptoInvestment.cryptoAmount - amountOfCrypto.text.toDouble()
                                                 )
                                             )
@@ -266,8 +270,8 @@ fun CryptoTransactionDialog(
                         Text("Cancel")
                     }
                 }, shape = RoundedCornerShape(30.dp)
-            )
+                )
+            }
         }
     }
-}
     
