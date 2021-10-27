@@ -34,8 +34,8 @@ import com.nemesisprotocol.cryptocraze.presentation.BottomNavigationBar
 import com.nemesisprotocol.cryptocraze.presentation.BottomSheetContent
 import com.nemesisprotocol.cryptocraze.presentation.Navigation
 import com.nemesisprotocol.cryptocraze.presentation.PortfolioViewModel
-import com.nemesisprotocol.cryptocraze.presentation.crypto_transaction_screen.TransactionType
-import com.nemesisprotocol.cryptocraze.presentation.home_screen.HomeViewModel
+import com.nemesisprotocol.cryptocraze.presentation.cryptotransactionscreen.TransactionType
+import com.nemesisprotocol.cryptocraze.presentation.homescreen.HomeViewModel
 import com.nemesisprotocol.cryptocraze.presentation.ui.theme.CryptoCrazeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

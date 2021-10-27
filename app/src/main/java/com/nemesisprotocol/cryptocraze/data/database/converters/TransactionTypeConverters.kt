@@ -1,7 +1,7 @@
 package com.nemesisprotocol.cryptocraze.data.database.converters
 
 import androidx.room.TypeConverter
-import com.nemesisprotocol.cryptocraze.presentation.crypto_transaction_screen.TransactionType
+import com.nemesisprotocol.cryptocraze.presentation.cryptotransactionscreen.TransactionType
 
 class TransactionTypeConverters {
 

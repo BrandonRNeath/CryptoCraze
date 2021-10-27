@@ -1,10 +1,10 @@
 package com.nemesisprotocol.cryptocraze.data.repos
 
 import androidx.annotation.WorkerThread
-import com.nemesisprotocol.cryptocraze.data.crypto_data.remote.CryptoDataApi
-import com.nemesisprotocol.cryptocraze.data.crypto_data.remote.CryptoDataApiMapper
-import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoData
-import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoDataRepo
+import com.nemesisprotocol.cryptocraze.data.cryptodata.remote.CryptoDataApi
+import com.nemesisprotocol.cryptocraze.data.cryptodata.remote.CryptoDataApiMapper
+import com.nemesisprotocol.cryptocraze.domain.cryptodata.CryptoData
+import com.nemesisprotocol.cryptocraze.domain.cryptodata.CryptoDataRepo
 import javax.inject.Inject
 
 class CryptoDataRepoImpl @Inject constructor(

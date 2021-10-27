@@ -2,16 +2,16 @@ package com.nemesisprotocol.cryptocraze.data.di
 
 import com.nemesisprotocol.cryptocraze.common.Constants
 import com.nemesisprotocol.cryptocraze.common.DispatcherProvider
-import com.nemesisprotocol.cryptocraze.data.crypto_data.remote.CryptoDataApi
-import com.nemesisprotocol.cryptocraze.data.crypto_data.remote.CryptoDataApiMapper
-import com.nemesisprotocol.cryptocraze.data.crypto_info.remote.CoinPaprikaApi
+import com.nemesisprotocol.cryptocraze.data.cryptodata.remote.CryptoDataApi
+import com.nemesisprotocol.cryptocraze.data.cryptodata.remote.CryptoDataApiMapper
+import com.nemesisprotocol.cryptocraze.data.cryptoinfo.remote.dto.CoinPaprikaApi
 import com.nemesisprotocol.cryptocraze.data.repos.*
-import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoDataRepo
-import com.nemesisprotocol.cryptocraze.domain.crypto_data.CryptoFavDataRepo
-import com.nemesisprotocol.cryptocraze.domain.crypto_info.CoinRepo
-import com.nemesisprotocol.cryptocraze.domain.payment_info.PaymentInfoRepo
+import com.nemesisprotocol.cryptocraze.domain.cryptodata.CryptoDataRepo
+import com.nemesisprotocol.cryptocraze.domain.cryptodata.CryptoFavDataRepo
+import com.nemesisprotocol.cryptocraze.domain.cryptoinfo.CoinRepo
+import com.nemesisprotocol.cryptocraze.domain.paymentinfo.PaymentInfoRepo
 import com.nemesisprotocol.cryptocraze.domain.portfolio.PortfolioRepo
-import com.nemesisprotocol.cryptocraze.domain.transaction_history.TransactionHistoryRepo
+import com.nemesisprotocol.cryptocraze.domain.transactionhistory.TransactionHistoryRepo
 import com.nemesisprotocol.cryptocraze.domain.user.UserRepo
 import dagger.Module
 import dagger.Provides

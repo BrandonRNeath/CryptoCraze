@@ -1,7 +1,7 @@
 package com.nemesisprotocol.cryptocraze.data.database.converters
 
 import androidx.room.TypeConverter
-import com.nemesisprotocol.cryptocraze.presentation.wallet_screen.CryptoCrazeVisaColour
+import com.nemesisprotocol.cryptocraze.presentation.walletscreen.CryptoCrazeVisaColour
 
 class CryptoCrazeVisaColourConverters {
 
