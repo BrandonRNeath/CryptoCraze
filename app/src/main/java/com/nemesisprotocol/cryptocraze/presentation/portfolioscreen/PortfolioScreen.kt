@@ -56,23 +56,13 @@ fun PortfolioScreen() {
             .fillMaxWidth()
     ) {
         Text(
-            text = "Portfolio Value",
+            text = "Your Portfolio",
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 32.dp),
             textAlign = TextAlign.Center,
-            color = Color.Gray,
             fontStyle = FontStyle.Italic,
-            fontSize = 18.sp
-        )
-        Text(
-            text = "£32,740.84 GBP",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp
+            fontSize = 20.sp
         )
         Column(
             Modifier
