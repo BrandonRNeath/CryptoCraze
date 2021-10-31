@@ -15,6 +15,7 @@ import com.nemesisprotocol.cryptocraze.Screen
 import com.nemesisprotocol.cryptocraze.domain.cryptodata.CryptoDataPriceInfo
 import com.nemesisprotocol.cryptocraze.domain.paymentinfo.CryptoCrazeVisaCard
 import com.nemesisprotocol.cryptocraze.domain.paymentinfo.FiatWalletCard
+import com.nemesisprotocol.cryptocraze.presentation.aboutscreen.AboutScreen
 import com.nemesisprotocol.cryptocraze.presentation.cryptotransactionscreen.CryptoTransactionConfirmation
 import com.nemesisprotocol.cryptocraze.presentation.cryptotransactionscreen.CryptoTransactionFailed
 import com.nemesisprotocol.cryptocraze.presentation.cryptotransactionscreen.CryptoTransactionScreen
@@ -26,6 +27,7 @@ import com.nemesisprotocol.cryptocraze.presentation.infoscreen.coininfo.CoinInfo
 import com.nemesisprotocol.cryptocraze.presentation.login.loginscreen.LoginScreen
 import com.nemesisprotocol.cryptocraze.presentation.login.signupscreen.SignUpScreen
 import com.nemesisprotocol.cryptocraze.presentation.portfolioscreen.PortfolioScreen
+import com.nemesisprotocol.cryptocraze.presentation.settings.SettingsScreen
 import com.nemesisprotocol.cryptocraze.presentation.splashscreen.SplashScreen
 import com.nemesisprotocol.cryptocraze.presentation.transactionhistoryscreen.TransactionHistoryScreen
 import com.nemesisprotocol.cryptocraze.presentation.walletscreen.CryptoCrazeVisaCardAddedScreen
@@ -184,6 +186,16 @@ fun Navigation(
         composable(Screen.TransactionHistory.route) {
             currentRoute.value = Screen.TransactionHistory.route
             TransactionHistoryScreen()
+        }
+
+        composable(Screen.Settings.route) {
+            currentRoute.value = Screen.Settings.route
+            SettingsScreen(navController)
+        }
+
+        composable(Screen.About.route) {
+            currentRoute.value = Screen.About.route
+            AboutScreen()
         }
     }
 }

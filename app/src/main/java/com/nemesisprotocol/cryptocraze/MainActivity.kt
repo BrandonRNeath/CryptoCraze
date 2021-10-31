@@ -363,7 +363,9 @@ class MainActivity : ComponentActivity() {
                                                 )
                                             }
                                         }
-                                        IconButton(onClick = { }) {
+                                        IconButton(onClick = {
+                                            navController.navigate(Screen.Settings.route)
+                                        }) {
                                             Icon(Icons.Rounded.Settings, "")
                                         }
                                     }

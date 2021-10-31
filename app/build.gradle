@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id "org.jmailen.kotlinter"
+    id 'com.google.android.gms.oss-licenses-plugin'
 }
 
 android {
@@ -124,6 +125,13 @@ dependencies {
 
     // Gson
     implementation 'com.google.code.gson:gson:2.8.8'
+
+    // OSS Licences
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
+
+
+    implementation "com.github.alorma:compose-settings-ui:0.7.1"
+    implementation 'com.github.alorma:compose-settings-storage-preferences:0.7.1'
 
 
 
