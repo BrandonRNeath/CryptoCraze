@@ -1,7 +1,7 @@
 package com.nemesisprotocol.cryptocraze.data.database.converters
 
 import androidx.room.TypeConverter
-import java.util.*
+import java.util.Date
 
 class TimestampConverters {
     @TypeConverter
