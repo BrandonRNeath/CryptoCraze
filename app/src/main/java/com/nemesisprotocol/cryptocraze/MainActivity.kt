@@ -168,9 +168,9 @@ class MainActivity : ComponentActivity() {
                                                                 bottomSheetScaffoldState.bottomSheetState.collapse()
                                                                 navController.navigate(
                                                                     Screen.CryptoTransaction.route + "/${
-                                                                        Gson().toJson(
-                                                                            it.mapPriceInfo()
-                                                                        )
+                                                                    Gson().toJson(
+                                                                        it.mapPriceInfo()
+                                                                    )
                                                                     }/${TransactionType.BUY.name}"
                                                                 )
                                                             }
@@ -286,9 +286,9 @@ class MainActivity : ComponentActivity() {
                                                                 bottomSheetScaffoldState.bottomSheetState.collapse()
                                                                 navController.navigate(
                                                                     Screen.CryptoTransaction.route + "/${
-                                                                        Gson().toJson(
-                                                                            it.mapPriceInfo()
-                                                                        )
+                                                                    Gson().toJson(
+                                                                        it.mapPriceInfo()
+                                                                    )
                                                                     }/${TransactionType.SELL.name}"
                                                                 )
                                                             }
