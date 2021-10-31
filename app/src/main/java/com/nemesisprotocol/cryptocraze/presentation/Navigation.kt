@@ -25,7 +25,6 @@ import com.nemesisprotocol.cryptocraze.presentation.infoscreen.InfoScreen
 import com.nemesisprotocol.cryptocraze.presentation.infoscreen.coininfo.CoinInfoScreen
 import com.nemesisprotocol.cryptocraze.presentation.login.loginscreen.LoginScreen
 import com.nemesisprotocol.cryptocraze.presentation.login.signupscreen.SignUpScreen
-import com.nemesisprotocol.cryptocraze.presentation.messenger.MessengerScreen
 import com.nemesisprotocol.cryptocraze.presentation.portfolioscreen.PortfolioScreen
 import com.nemesisprotocol.cryptocraze.presentation.splashscreen.SplashScreen
 import com.nemesisprotocol.cryptocraze.presentation.transactionhistoryscreen.TransactionHistoryScreen
@@ -70,11 +69,6 @@ fun Navigation(
         composable(Screen.Wallet.route) {
             currentRoute.value = Screen.Wallet.route
             WalletScreen(navController)
-        }
-
-        composable(Screen.Messenger.route) {
-            currentRoute.value = Screen.Messenger.route
-            MessengerScreen()
         }
 
         composable(Screen.Info.route) {

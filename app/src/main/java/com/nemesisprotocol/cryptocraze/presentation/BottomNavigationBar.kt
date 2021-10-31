@@ -25,7 +25,7 @@ fun BottomNavigationBar(
         Screen.Home,
         Screen.Wallet,
         Screen.CryptoCrazeLogo,
-        Screen.Messenger,
+        Screen.Portfolio,
         Screen.Info
     )
     BottomNavigation(

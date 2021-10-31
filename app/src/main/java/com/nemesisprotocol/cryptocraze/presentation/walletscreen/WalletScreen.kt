@@ -14,7 +14,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.nemesisprotocol.cryptocraze.R
-import com.nemesisprotocol.cryptocraze.Screen
 import com.nemesisprotocol.cryptocraze.presentation.walletscreen.addwallet.AddCryptoCrazeVisaCardDialog
 import com.nemesisprotocol.cryptocraze.presentation.walletscreen.addwallet.AddPaymentCardDialog
 
@@ -75,34 +74,6 @@ fun WalletScreen(navController: NavHostController) {
                 )
                 Icon(
                     painter = painterResource(id = R.drawable.ic_wallet_24),
-                    contentDescription = null,
-                    Modifier
-                        .align(alignment = Alignment.CenterVertically)
-                        .padding(end = 8.dp)
-                )
-            }
-        }
-
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .padding(start = 8.dp, end = 8.dp, top = 8.dp)
-                .clickable {
-                    navController.navigate(Screen.Portfolio.route)
-                }
-        ) {
-            // TODO move this later on
-            Row {
-                Text(
-                    text = "My Portfolio",
-                    modifier = Modifier
-                        .align(alignment = Alignment.CenterVertically)
-                        .weight(1f)
-                        .padding(start = 8.dp)
-                )
-                Icon(
-                    painter = painterResource(id = R.drawable.portfolio_icon),
                     contentDescription = null,
                     Modifier
                         .align(alignment = Alignment.CenterVertically)
