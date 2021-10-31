@@ -8,10 +8,9 @@ A Mock Cryptocurrency trading app developed with [Jetpack Compose](https://devel
 
 Live cryptocurrency prices with account balance matching portfolio
 
-<table>
+<table cellspacing="0" cellpadding="0">
  <tr>
     <td><img src="screenshots/home_screen.png" alt="Live Crypto Prices" width="200"/></td>
-    <td>
    </tr> 
 </table>
 
@@ -19,13 +18,13 @@ Live cryptocurrency prices with account balance matching portfolio
 
 Buy and sell cryptocurrency with created fiat wallet or Crypto Craze Visa Card balance
 
-<table>
+<table cellspacing="0" cellpadding="0">
  <tr>
     <td><img src="screenshots/buy_sell_bottom.png" alt="Buy/Sell" width="200"/></td>
     <td><img src="screenshots/buy_sell_list.png" alt="Buy/Sell" width="200"/></td>
    </tr> 
 </table>
-<table>
+<table cellspacing="0" cellpadding="0">
  <tr>
     <td><img src="screenshots/buy_sell_screen.png" alt="Buy/Sell" width="200"/></td>
     <td><img src="screenshots/purchase_successful.png" alt="Buy/Sell" width="200"/></td>
@@ -36,12 +35,12 @@ Buy and sell cryptocurrency with created fiat wallet or Crypto Craze Visa Card b
 
 Fiat Wallet/Crypto Craze Visa Card payment creation options
 
-<table>
+<table cellspacing="0" cellpadding="0">
  <tr>
     <td> <img src="screenshots/wallet_screen.png" alt="Wallet" width="200"/></td>
    </tr> 
 </table>
-<table>
+<table cellspacing="0" cellpadding="0">
  <tr>
     <td><img src="screenshots/create_visa_card.png" alt="Wallet" width="200"/></td>
     <td><img src="screenshots/create_fiat_wallet_card.png" alt="Wallet" width="200"/></td>
