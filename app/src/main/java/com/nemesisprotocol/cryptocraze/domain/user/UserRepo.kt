@@ -1,8 +1,10 @@
 package com.nemesisprotocol.cryptocraze.domain.user
 
+import androidx.lifecycle.LiveData
+
 interface UserRepo {
 
-    fun getUsers(): List<User>
+    fun getUsers(): LiveData<List<User>>
 
     fun getUserByUsername(username: String): User
 

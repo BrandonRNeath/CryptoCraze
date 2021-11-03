@@ -1,5 +1,6 @@
 package com.nemesisprotocol.cryptocraze.data.database.user
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -10,7 +11,7 @@ import com.nemesisprotocol.cryptocraze.domain.user.User
 interface UserDao {
 
     @Query("SELECT * FROM user")
-    fun getUsers(): List<User>
+    fun getUsers(): LiveData<List<User>>
 
     @Query("SELECT * from user where username = :username")
     fun getUserByUsername(username: String): User
