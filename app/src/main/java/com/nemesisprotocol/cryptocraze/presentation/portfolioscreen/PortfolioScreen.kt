@@ -70,33 +70,36 @@ fun PortfolioScreen() {
                 .padding(top = 16.dp),
             verticalArrangement = Arrangement.Center, Alignment.CenterHorizontally,
         ) {
-            PieChart(
-                pieChartData = PieChartData(slices),
-                modifier = Modifier.size(128.dp),
-                animation = TweenSpec(durationMillis = 500),
-                sliceDrawer = SimpleSliceDrawer(30f)
-            )
-        }
-
-        LazyColumn() {
-            itemsIndexed(portfolio.value) { index, item ->
-                Text(
+            Row(horizontalArrangement = Arrangement.SpaceEvenly) {
+                PieChart(
+                    pieChartData = PieChartData(slices),
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, top = 16.dp),
-                    text = item.cryptoSymbol.uppercase(),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp,
-                    color = listOfPortfolioColours[index]
+                        .padding(start = 32.dp, top = 8.dp)
+                        .size(192.dp),
+                    animation = TweenSpec(durationMillis = 500),
+                    sliceDrawer = SimpleSliceDrawer(30f)
                 )
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp),
-                    text = "${hashMap[item.cryptoSymbol]!!.roundToTwoDecimals()}%",
-                    fontStyle = FontStyle.Italic,
-                    fontSize = 14.sp
-                )
+                LazyColumn(Modifier.padding(start = 32.dp)) {
+                    itemsIndexed(portfolio.value) { index, item ->
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp, top = 16.dp),
+                            text = item.cryptoSymbol.uppercase(),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                            color = listOfPortfolioColours[index]
+                        )
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp),
+                            text = "${hashMap[item.cryptoSymbol]!!.roundToTwoDecimals()}%",
+                            fontStyle = FontStyle.Italic,
+                            fontSize = 14.sp
+                        )
+                    }
+                }
             }
         }
     }
