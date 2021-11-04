@@ -86,6 +86,7 @@ Dependency Injection
 * [Lottie](https://github.com/airbnb/lottie-android)
 * [Gson](https://github.com/google/gson)
 * [Alorma Compose Settings](https://github.com/alorma/Compose-Settings)
+* [Truth](https://truth.dev/)
 
 ## License
 ```
